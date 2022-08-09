@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { GetDataProducts } from 'apis';
+import { useEffect, useState } from 'react';
+import { Routing } from 'Routes/Routes';
+import './Assets/Styles/Components/app.scss';
+import Layout from './Layouts/Layout.jsx';
 function App() {
+  const [DataProducts,setDataProducts] =useState([]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routing />
     </div>
   );
 }
