@@ -53,15 +53,15 @@ export const Routing = () => {
         <Route element={<ProtectedRoute />}>
           <Route
             path={PAGE.Admin_Product}
-            element={<Layout main={<AdminProductPage />} />}
+            element={<Layout isAdmin="true" main={<AdminProductPage />} />}
           />
           <Route
             path={PAGE.Admin_Order}
-            element={<Layout main={<AdminOrdersPage />} />}
+            element={<Layout isAdmin="true" main={<AdminOrdersPage />} />}
           />
           <Route
             path={PAGE.Admin_Quantity}
-            element={<Layout main={<AdminQuantityPage />} />}
+            element={<Layout isAdmin="true" main={<AdminQuantityPage />} />}
           />
         </Route>
 
