@@ -66,7 +66,7 @@ export const Routing = () => {
         </Route>
 
         <Route element={<PrivateRoute />}>
-          <Route path={PAGE.Login} element={<Layout main={<LoginPage />} />} />
+          <Route path={PAGE.Login} element={ <LoginPage />} />
         </Route>
 
       </Routes>

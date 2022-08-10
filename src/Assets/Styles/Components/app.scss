@@ -1,3 +1,14 @@
+
 .App{
     height: 100%;
+}
+
+@font-face {
+    font-family:IranianSans ;
+    src: local("IranianSans")
+    url('../../Fonts//IranianSans.ttf') format('truetype');
+}
+body,
+html {
+    font-family:IranianSans ;
 }
