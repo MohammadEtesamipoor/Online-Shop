@@ -14,6 +14,7 @@ import {
 
 export function AdminProductPage() {
   const [productData, setproductData] = useState([]);
+
   const [CategoryProductData, setCategoryProductData] = useState([]);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export function AdminProductPage() {
   }, []);
   return (
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
-    <>
+    <Box h="100%">
       <Box mt="20px" display="flex" justifyContent="space-between" px="4">
         <Heading color="#525261">مدیریت کالاها</Heading>
         <Button
@@ -41,10 +42,10 @@ export function AdminProductPage() {
         </Button>
       </Box>
       {productData.length > 0 ? (
-        <TableAdminPage listProduc={productData} listCategory={CategoryProductData} />
+        <TableAdminPage listProduct={productData} listCategory={CategoryProductData}  />
       ) : (
         "loadiing"
       )}
-    </>
+    </Box>
   );
 }

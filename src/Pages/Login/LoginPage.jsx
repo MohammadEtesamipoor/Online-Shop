@@ -32,6 +32,7 @@ export function LoginPage() {
   const navigate =useNavigate();
   return (
     <Box
+      dir="ltr"
       display="flex"
       justifyContent="center"
       alignItems="center"

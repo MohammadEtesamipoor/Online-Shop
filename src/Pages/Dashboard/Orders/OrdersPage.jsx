@@ -1,10 +1,5 @@
-
-
 export function AdminOrdersPage() {
-    return ( 
-        <>
-        <h1>Admin Orders Page</h1>
-        </>
-     );
+  return ( <h1>
+    AdminOrdersPage
+  </h1> );
 }
-
