@@ -42,7 +42,7 @@ const Header = () => {
     >
       <Flex
         alignItems="center"
-        flexDirection="row-reverse"
+
         w="100%"
         h="80px"
         display="flex"
@@ -51,14 +51,14 @@ const Header = () => {
         justifyContent="space-between"
         px={8}
       >
-        <Flex flexDirection="row-reverse" gap="8" alignItems="center">
+        <Flex  gap="8" alignItems="center">
           <Link to="/admin/product">
-            <Flex flexDirection="row-reverse" gap="4" alignItems="center">
+            <Flex gap="4" alignItems="center">
               <Heading>پنل مدیریت فروشگاه</Heading>
             </Flex>
           </Link>
         </Flex>
-        <Stack direction="row-reverse" spacing={4} align="center">
+        <Stack direction="row" spacing={4} align="center">
           <Button
          
             variant="ghost"
@@ -101,7 +101,7 @@ const Header = () => {
             سفارش ها
           </Button>
         </Stack>
-        <Flex flexDirection="row-reverse" gap="6" alignItems="center">
+        <Flex gap="6" alignItems="center">
           <Link to="/">
             <Text fontSize="md">بازگشت به سایت</Text>
           </Link>

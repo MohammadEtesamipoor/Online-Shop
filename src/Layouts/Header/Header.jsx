@@ -25,7 +25,6 @@ const Header = () => {
   return (
     <Flex
       alignItems="center"
-      flexDirection="row-reverse"
       w="100%"
       h="80px"
       display="flex"
@@ -35,9 +34,9 @@ const Header = () => {
       justifyContent="space-between"
       px={8}
     >
-      <Flex flexDirection="row-reverse" gap="8" alignItems="center"  >
+      <Flex  gap="8" alignItems="center"  >
         <Link to="/">
-          <Flex flexDirection="row-reverse" gap="4" alignItems="center">
+          <Flex  gap="4" alignItems="center">
             <Image boxSize="80px" src={imgLogo} alt="Logo" />
             <Hide below="sm">
               <Heading>تاپ کالا</Heading>
@@ -60,7 +59,7 @@ const Header = () => {
         </InputGroup>
       </Flex>
 
-      <Flex flexDirection="row-reverse" gap="6" alignItems="center">
+      <Flex  gap="6" alignItems="center">
         <Link to="/login">
           <Hide below="sm">
           <Text fontSize="md">ورود</Text>
@@ -70,7 +69,7 @@ const Header = () => {
            </Show>
         </Link>
         <Link to="/basket">
-          <Flex flexDirection="row-reverse" gap="2" alignItems="center">
+          <Flex  gap="2" alignItems="center">
             <FaShoppingBag size={20} />
            <Hide below="sm">
            <Text fontSize="md">سبد خرید</Text>

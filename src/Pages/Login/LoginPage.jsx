@@ -20,14 +20,13 @@ import {
   FormLabel,
   FormErrorMessage,
   Spacer,
+  useColorMode
 } from "@chakra-ui/react";
 import { LoginValidtion } from "Validations/LoginValidtion";
 import React from "react";
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from "react-icons/fa";
-
-export function LoginPage() {
+export function LoginPage() { 
   const userLoginValidation = LoginValidtion();
-
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const navigate =useNavigate();
@@ -135,7 +134,7 @@ export function LoginPage() {
                   fontSize="22px"
                   textAlign="center"
                  width="70%"
-                  bg="#FF834D"
+                  bg="#FFAD70"
                   color="#4E7E95"
                   variant="solid"
                   onClick={()=>{
@@ -144,7 +143,6 @@ export function LoginPage() {
                 >
                   ورود
                 </Button>
-
             </FormControl>
           </Flex>
           {/* <form onSubmit={userLoginValidation.handleSubmit}>
