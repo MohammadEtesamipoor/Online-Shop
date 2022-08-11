@@ -1,5 +1,5 @@
 import { GetProducts } from "apis/ApiProduct";
-// import { GetProducts } from "apis/ApiProduct";
+import { GetProductsCategory } from "apis/ApiCategory";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TableAdminPage } from "Components";
@@ -15,21 +15,36 @@ import {
 export function AdminProductPage() {
   const [productData, setproductData] = useState([]);
   const [CategoryProductData, setCategoryProductData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
+        await GetProductsCategory().then(res=>{
+            setCategoryProductData(res.data);
+        })
       await GetProducts().then((res) => {
         setproductData(res.data);
       });
     };
     fetchData();
-    console.log(productData.slice(0, 20));
   }, []);
   return (
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
     <>
-    <h1>
-        product page
-    </h1>
+      <Box mt="20px" display="flex" justifyContent="space-between" px="4">
+        <Heading color="#525261">مدیریت کالاها</Heading>
+        <Button
+          rightIcon={<FaPlus />}
+          colorScheme="teal"
+          variant="outline"
+        >
+         افزودن کالا
+        </Button>
+      </Box>
+      {productData.length > 0 ? (
+        <TableAdminPage listProduc={productData} listCategory={CategoryProductData} />
+      ) : (
+        "loadiing"
+      )}
     </>
   );
 }

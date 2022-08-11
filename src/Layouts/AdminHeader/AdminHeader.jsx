@@ -1,4 +1,4 @@
-import styles from "Assets/Styles/Components/Header/index.module.scss";
+// import styles from "Assets/Styles/Components/Header/index.module.scss";
 // import { Button } from "Components/Button/Button";
 
 import {
@@ -34,11 +34,7 @@ const Header = () => {
   const [activePage,setActivePage] = useState("product");
   return (
     <Box
-      w="100%"
-      h="160px"
-      display="flex"
-      flexDirection="column"
-      position="fixed"
+    mb="-80px"
     >
       <Flex
         alignItems="center"
@@ -112,25 +108,3 @@ const Header = () => {
 };
 
 export default Header;
-const Example = () => {
-  const colors = useColorModeValue(
-    ["red.50", "teal.50", "blue.50"],
-    ["red.900", "teal.900", "blue.900"]
-  );
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const bg = colors[tabIndex];
-  return (
-    <Tabs onChange={(index) => setTabIndex(index)} bg={bg}>
-      <TabList>
-        <Tab>Red</Tab>
-        <Tab>Teal</Tab>
-        <Tab>Blue</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>The Primary Colors</TabPanel>
-        <TabPanel>Are 1, 2, 3</TabPanel>
-        <TabPanel>Red, yellow and blue.</TabPanel>
-      </TabPanels>
-    </Tabs>
-  );
-};
