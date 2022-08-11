@@ -1,4 +1,4 @@
-import styles from "Assets/Styles/Components/Header/index.module.scss";
+// import styles from "Assets/Styles/Components/Header/index.module.scss";
 // import { Button } from "Components/Button/Button";
 
 import {
@@ -31,18 +31,11 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 const Header = () => {
   const navigate = useNavigate();
-  const [activePage,setActivePage] = useState("product");
+  const [activePage, setActivePage] = useState("product");
   return (
-    <Box
-      w="100%"
-      h="160px"
-      display="flex"
-      flexDirection="column"
-      position="fixed"
-    >
+    <Box mb="-80px">
       <Flex
         alignItems="center"
-
         w="100%"
         h="80px"
         display="flex"
@@ -51,7 +44,7 @@ const Header = () => {
         justifyContent="space-between"
         px={8}
       >
-        <Flex  gap="8" alignItems="center">
+        <Flex gap="8" alignItems="center">
           <Link to="/admin/product">
             <Flex gap="4" alignItems="center">
               <Heading>پنل مدیریت فروشگاه</Heading>
@@ -60,43 +53,35 @@ const Header = () => {
         </Flex>
         <Stack direction="row" spacing={4} align="center">
           <Button
-         
             variant="ghost"
-            bg={activePage==="product" && "#E5ECF4"}
-            color={activePage==="product" && "#4E7E95"}
+            bg={activePage === "product" && "#E5ECF4"}
+            color={activePage === "product" && "#4E7E95"}
             onClick={() => {
               navigate("/admin/product");
-              setActivePage(
-                "product"
-              )
+              setActivePage("product");
             }}
           >
             کالاها
           </Button>
           <Button
             variant="ghost"
-            bg={activePage==="order" && "#E5ECF4"}
-            color={activePage==="order" && "#4E7E95"}
+            bg={activePage === "quantity" && "#E5ECF4"}
+            color={activePage === "quantity" && "#4E7E95"}
             onClick={() => {
-              navigate("/admin/order");
-              setActivePage(
-                "order"
-              )
+              navigate("/admin/quantity");
+              setActivePage("quantity");
             }}
           >
             موجودی وقیمت ها
           </Button>
           <Button
             variant="ghost"
-            bg={activePage==="quantity" && "#E5ECF4"}
-            color={activePage==="quantity" && "#4E7E95"}
+            bg={activePage === "order" && "#E5ECF4"}
+            color={activePage === "order" && "#4E7E95"}
             onClick={() => {
-              navigate("/admin/quantity");
-              setActivePage(
-                "quantity"
-              )
+              navigate("/admin/order");
+              setActivePage("order");
             }}
-            
           >
             سفارش ها
           </Button>
@@ -112,25 +97,3 @@ const Header = () => {
 };
 
 export default Header;
-const Example = () => {
-  const colors = useColorModeValue(
-    ["red.50", "teal.50", "blue.50"],
-    ["red.900", "teal.900", "blue.900"]
-  );
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const bg = colors[tabIndex];
-  return (
-    <Tabs onChange={(index) => setTabIndex(index)} bg={bg}>
-      <TabList>
-        <Tab>Red</Tab>
-        <Tab>Teal</Tab>
-        <Tab>Blue</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>The Primary Colors</TabPanel>
-        <TabPanel>Are 1, 2, 3</TabPanel>
-        <TabPanel>Red, yellow and blue.</TabPanel>
-      </TabPanels>
-    </Tabs>
-  );
-};

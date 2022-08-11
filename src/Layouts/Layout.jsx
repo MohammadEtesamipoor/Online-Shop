@@ -8,7 +8,7 @@ const Layout = ({ main, isAdmin }) => {
     <div className={styles.DivLayout}>
       {isAdmin ? <AdminHeader /> : <Header />}
       <main className={styles.main}>{main}</main>
-      <Footer />
+       {!isAdmin &&<Footer />}
     </div>
   );
 };
