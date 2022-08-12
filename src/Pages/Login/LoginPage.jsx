@@ -22,11 +22,10 @@ import {
   Spacer,
   useColorMode
 } from "@chakra-ui/react";
-import { LoginValidtion } from "Validations/LoginValidtion";
+// import { LoginValidtion } from "Validations/LoginValidtion";
 import React from "react";
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from "react-icons/fa";
 export function LoginPage() { 
-  const userLoginValidation = LoginValidtion();
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const navigate =useNavigate();
