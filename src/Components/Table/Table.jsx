@@ -15,6 +15,7 @@ import {
   Tabs,
   TabList,
   Tab,
+  Image
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -53,8 +54,16 @@ export const TableAdminPage = (props) => {
             {props.listProduct
               .slice(pagination - 10, pagination)
               .map((item) => (
-                <Tr bg="#A0C9DD" key={item.id}>
-                  <Td>{item["id"]}</Td>
+                <Tr bg="#A0C9DD" key={item.id} >
+                  <Td>
+                    <Image
+                      boxSize="70px"
+                      objectFit="cover"
+                      src="https://www.freepnglogos.com/uploads/mobile-png/mobile-phone-icons-icon-7.png"
+                      alt="Dan Abramov"
+                    />
+                  </Td>
+
                   <Td>{item["product-name-fa"]}</Td>
                   <Td>{props.listCategory[item["category-id"]]["name-en"]}</Td>
                   <Td>
