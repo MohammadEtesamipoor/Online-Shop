@@ -6,7 +6,7 @@ import Layout from './Layouts/Layout.jsx';
 function App() {
   const [DataProducts,setDataProducts] =useState([]);
   return (
-    <div className="App">
+    <div dir="rtl" className="App">
       <Routing />
     </div>
   );

@@ -27,7 +27,7 @@ export const Routing = () => {
   return (
     <Router>
       <Routes>
-        
+         {/* public routes  */}
         <Route element={<PublicRoute />}>
           <Route path={PAGE.Main} element={<Layout main={<HomePage />} />} />
           <Route element={<Layout main={<HomePage />} />} />
@@ -49,26 +49,25 @@ export const Routing = () => {
             element={<Layout main={<CheckoutsPage />} />}
           />
         </Route>
-
-        <Route element={<ProtectedRoute />}>
+        {/* Protected Route Admin */}
+       <Route element={<ProtectedRoute />}>
           <Route
             path={PAGE.Admin_Product}
-            element={<Layout main={<AdminProductPage />} />}
+            element={<Layout isAdmin="true" main={<AdminProductPage />} />}
           />
           <Route
             path={PAGE.Admin_Order}
-            element={<Layout main={<AdminOrdersPage />} />}
+            element={<Layout isAdmin="true" main={<AdminOrdersPage />} />}
           />
           <Route
             path={PAGE.Admin_Quantity}
-            element={<Layout main={<AdminQuantityPage />} />}
+            element={<Layout isAdmin="true" main={<AdminQuantityPage />} />}
           />
         </Route>
-
+        {/* private routes */}
         <Route element={<PrivateRoute />}>
-          <Route path={PAGE.Login} element={<Layout main={<LoginPage />} />} />
+          <Route path={PAGE.Login} element={<LoginPage />} />
         </Route>
-
       </Routes>
     </Router>
   );
