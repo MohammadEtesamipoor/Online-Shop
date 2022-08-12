@@ -13,11 +13,14 @@ import {
   RadioGroup,
   Stack,
   Radio,
+  Tabs,
+TabList,
+Tab
 } from "@chakra-ui/react";
 
 export function AdminOrdersPage() {
   const [OrdersData, setOrdersData] = useState([]);
-
+  const [satusOrders, setSatusOrders]= useState("0")
   useEffect(() => {
     const fetchData = async () => {
       await GetOrders().then((res) => {
@@ -26,24 +29,25 @@ export function AdminOrdersPage() {
     };
     fetchData();
   }, []);
+
+  const handelStatusOrders = (e) => {
+    setSatusOrders(e);
+  };
   return (
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
     <Box h="100%">
       <Box mt="20px" display="flex" justifyContent="space-between" px="4">
         <Heading color="#525261">مدیریت سفارش ها</Heading>
-        <RadioGroup defaultValue="2">
-          <Stack spacing={5} direction="row">
-            <Radio colorScheme="red" value="1">
-              سفارش های در انتظار ارسال
-            </Radio>
-            <Radio colorScheme="green" value="2">
-              سفارش های تحویل شده
-            </Radio>
-          </Stack>
-        </RadioGroup>
+
+        <Tabs variant="soft-rounded" colorScheme="red" onChange={(e)=>handelStatusOrders(e)}>
+          <TabList>
+            <Tab >سفارش های تحویل شده</Tab>
+            <Tab >سفارش های در انتظار ارسال</Tab>
+          </TabList>
+        </Tabs>
       </Box>
       {OrdersData.length > 0 ? (
-        <TableOrdersPage listOrders={OrdersData} />
+        <TableOrdersPage listOrders={OrdersData} statusOrders={satusOrders} />
       ) : (
         "loadiing"
       )}

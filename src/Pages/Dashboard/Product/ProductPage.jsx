@@ -37,6 +37,7 @@ export function AdminProductPage() {
           rightIcon={<FaPlus />}
           colorScheme="teal"
           variant="outline"
+          
         >
          افزودن کالا
         </Button>

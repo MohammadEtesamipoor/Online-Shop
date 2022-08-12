@@ -22,13 +22,20 @@ import { FaEdit, FaRegEdit, FaUserClock } from "react-icons/fa";
 
 export const TableOrdersPage = (props) => {
   const [pagination, setPagination] = useState(10);
+  const [statusOrdersData, setStatusOrdersData] = useState("posted");
+
+  useEffect(() => {
+    props.statusOrders===0? setStatusOrdersData("posted"):setStatusOrdersData("pending") 
+  },[props.statusOrders])
+
   const avgCountProduct = Math.ceil(props.listOrders.length / 10);
   const paginationNumbers = Array.from(Array(avgCountProduct).keys());
-  console.log(props.listOrders);
+  console.log(props.statusOrders);
+  
   const handelPagination = (item) => {
     setPagination(item * 10);
   };
-
+ 
   const handelPriceFormat = (item) => {
     let arr = [];
     item.split("").forEach((element, index) => {
@@ -39,6 +46,7 @@ export const TableOrdersPage = (props) => {
     });
     return arr.join("") + "ریال";
   };
+  
   return (
     <>
       <TableContainer maxWidth="100%" whiteSpace="normal">
@@ -64,6 +72,7 @@ export const TableOrdersPage = (props) => {
           </Thead>
           <Tbody>
             {props.listOrders.slice(pagination - 10, pagination).map((item) => (
+              item['status']===statusOrdersData&&
               <Tr bg="#A0C9DD" key={item.id}>
                 <Td>
                   {item.name} {item.family}
