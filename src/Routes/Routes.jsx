@@ -28,6 +28,7 @@ export const Routing = () => {
     <Router>
       <Routes>
          {/* public routes  */}
+         <Route path="*" element={<Layout main={<HomePage />} />} />
         <Route element={<PublicRoute />}>
           <Route path={PAGE.Main} element={<Layout main={<HomePage />} />} />
           <Route element={<Layout main={<HomePage />} />} />

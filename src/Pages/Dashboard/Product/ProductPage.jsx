@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { TableAdminPage } from "Components";
 import { FaEye, FaEyeSlash, FaUserAlt, FaPlus } from "react-icons/fa";
+import {DeleteButtonProduct} from 'Components/Button/DeleteButtonProduct'
 import {
   Box,
   Button,
@@ -30,6 +31,7 @@ export function AdminProductPage() {
     };
     fetchData();
   }, []);
+  
   const handelFilter=(e)=>{
     console.log(e.target.name);
   }
