@@ -1,6 +1,6 @@
 import imgLogo from "../../Assets/Images/logoLognin.png";
 import { Formik, Form, Field } from "formik";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -20,15 +20,21 @@ import {
   FormLabel,
   FormErrorMessage,
   Spacer,
-  useColorMode
+  useColorMode,
+  FormHelperText
 } from "@chakra-ui/react";
 // import { LoginValidtion } from "Validations/LoginValidtion";
 import React from "react";
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from "react-icons/fa";
-export function LoginPage() { 
+export function LoginPage() {
   const [show, setShow] = React.useState(false);
+  const [input, setInput] = React.useState('')
+
+  const handleInputChange = (e) => setInput(e.target.value)
+
+  const isError = input === ''
   const handleClick = () => setShow(!show);
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   return (
     <Box
       dir="ltr"
@@ -87,6 +93,7 @@ export function LoginPage() {
               <Heading color="#E5ECF4">ورود کاربر</Heading>
               {/* Use Name */}
               <Box>
+              <FormControl isInvalid={isError}>
                 <InputGroup width="300px">
                   <Input
                     _placeholder={{ color: "#a0c9dd" }}
@@ -94,16 +101,26 @@ export function LoginPage() {
                     variant="flushed"
                     placeholder="نام کاربری"
                     size="lg"
+                    onChange={handleInputChange}
                   />
                   <InputRightElement
                     pointerEvents="none"
                     children={<FaUserAlt color="#ff934d" />}
                   />
                 </InputGroup>
+                {!isError ? (
+                  <FormHelperText>
+                    
+                  </FormHelperText>
+                ) : (
+                  <FormErrorMessage dir="rtl" color="#f1f1f1">نام کاربری را وارد کنید</FormErrorMessage>
+                )}
+                </FormControl>
               </Box>
               <Spacer />
               {/* password */}
               <Box>
+              <FormControl isInvalid={isError}>
                 <InputGroup width="300px">
                   <InputRightElement
                     pointerEvents="none"
@@ -127,22 +144,31 @@ export function LoginPage() {
                     </Box>
                   </InputLeftElement>
                 </InputGroup>
+
+                {!isError ? (
+                  <FormHelperText>
+                    
+                  </FormHelperText>
+                ) : (
+                  <FormErrorMessage dir="rtl" color="#f1f1f1">رمز عبور را وارد کنید</FormErrorMessage>
+                )}
+                </FormControl>
               </Box>
 
-                <Button
-                  py="4"
-                  fontSize="22px"
-                  textAlign="center"
-                 width="70%"
-                  bg="#FFAD70"
-                  color="#4E7E95"
-                  variant="solid"
-                  onClick={()=>{
-                    navigate('/admin/product')
-                  }}
-                >
-                  ورود
-                </Button>
+              <Button
+                py="4"
+                fontSize="22px"
+                textAlign="center"
+                width="70%"
+                bg="#FFAD70"
+                color="#4E7E95"
+                variant="solid"
+                onClick={() => {
+                  navigate("/admin/product");
+                }}
+              >
+                ورود
+              </Button>
             </FormControl>
           </Flex>
           {/* <form onSubmit={userLoginValidation.handleSubmit}>
