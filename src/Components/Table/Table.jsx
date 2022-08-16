@@ -1,4 +1,6 @@
 import { DeleteButtonProduct } from "Components/Button/DeleteButtonProduct";
+// import {} from "../../upload/index";
+
 import {
   TableContainer,
   Table,
@@ -75,18 +77,26 @@ export const TableAdminPage = (props) => {
           </Thead>
           <Tbody>
             {dataProduct.slice(pagination - 10, pagination).map((item) => (
+              
               <Tr bg="#A0C9DD" key={item.id}>
-                <Td>
-                  <Image
-                    boxSize="70px"
-                    objectFit="cover"
-                    src="https://www.freepnglogos.com/uploads/mobile-png/mobile-phone-icons-icon-7.png"
-                    alt="Dan Abramov"
-                  />
+                <Td > 
+                  <div
+                    style={{
+                      backgroundImage: `url(${require(`upload/${item.images[0]}`)})`, 
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize:" contain, cover",
+                      backgroundPosition: "bottom",
+                      width: "120px",
+                      height: "50px",
+                    }}
+                  ></div>
                 </Td>
 
-                <Td>{item["product-name-fa"]}</Td>
-                <Td>{props.listCategory[item["category-id"]]["name-en"]}</Td>
+                <Td >{item["product-name-fa"]}</Td>
+                <Td>{props.listCategory.map(itemCategory=>(
+                        itemCategory["id"]==item["category-id"]?
+                          itemCategory["name-en"]:null
+                         ))}</Td>
                 <Td>
                   <Box display="flex" gap={6}>
                     <Link display="flex" gap={2}>

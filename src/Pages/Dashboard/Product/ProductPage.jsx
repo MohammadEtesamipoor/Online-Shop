@@ -4,14 +4,16 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { TableAdminPage } from "Components";
 import { FaEye, FaEyeSlash, FaUserAlt, FaPlus } from "react-icons/fa";
-import {DeleteButtonProduct} from 'Components/Button/DeleteButtonProduct'
+import { DeleteButtonProduct } from "Components/Button/DeleteButtonProduct";
 import {
   Box,
   Button,
   Heading,
   ButtonGroup,
   IconButton,
-  Select
+  Select,
+  Skeleton,
+  Stack
 } from "@chakra-ui/react";
 
 export function AdminProductPage() {
@@ -31,18 +33,22 @@ export function AdminProductPage() {
     };
     fetchData();
   }, []);
-  
-  const handelFilter=(e)=>{
+
+  const handelFilter = (e) => {
     console.log(e.target.name);
-  }
+  };
   return (
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
     <Box h="100%">
       <Box mt="20px" display="flex" justifyContent="space-between" px="4">
         <Heading color="#525261">مدیریت کالاها</Heading>
-        <Select dir="ltr" w="120px" placeholder="all" >
-          <option onChange={(e)=>handelFilter("option1")} value="option1">samsung</option>
-          <option onChange={(e)=>handelFilter("option2")} value="option2">xiaomi</option>
+        <Select dir="ltr" w="120px" placeholder="all">
+          <option onChange={(e) => handelFilter("option1")} value="option1">
+            samsung
+          </option>
+          <option onChange={(e) => handelFilter("option2")} value="option2">
+            xiaomi
+          </option>
           <option value="option3">nokia</option>
           <option value="option4">huawei</option>
         </Select>
@@ -56,7 +62,11 @@ export function AdminProductPage() {
           listCategory={CategoryProductData}
         />
       ) : (
-        "loading"
+        <Stack mt="40px">
+          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
+          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
+          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
+        </Stack>
       )}
     </Box>
   );

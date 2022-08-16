@@ -18,3 +18,12 @@ export async function DeleteProducts(id) {
         return Promise.reject(e);
     }
 }
+
+export async function UpdateProducts(id,data) {
+    try {
+        const response = await HttpService.put(GET_PRODUCTS + '/' + id,data);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
