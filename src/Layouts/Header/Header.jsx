@@ -33,6 +33,7 @@ const Header = () => {
       color="#E5ECf4"
       justifyContent="space-between"
       px={8}
+      zIndex= "100"
     >
       <Flex  gap="8" alignItems="center"  >
         <Link to="/">
