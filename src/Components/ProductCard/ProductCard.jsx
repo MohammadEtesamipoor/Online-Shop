@@ -22,12 +22,14 @@ export function ProductCard({itemProduct,itemCategory}) {
         }}
         role={"group"}
         p={6}
-        maxW={"330px"}
+        maxW={"30%"}
         w={"full"}
-        boxShadow={"2xl"}
+        boxShadow={"xl"}
         rounded={"lg"}
         pos={"relative"}
         zIndex={1}
+        bg="#e4daf383 "
+        color="#2c2c2c"
       >
         <Box
           rounded={"lg"}

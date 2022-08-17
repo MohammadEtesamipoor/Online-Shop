@@ -35,7 +35,7 @@ export function HomePage() {
             <Box>
               <Heading>{itemCategory["name-fa"]}</Heading>
               {/* Box list product card */}
-              <Box display="flex" gap="10px" my="20px" mx="30px">
+              <Box display="flex" flexWrap="wrap" gap="40px" my="20px" mx="30px">
                 {/*Box card product */}
                 {productData.map(
                   (itemProduct) =>
