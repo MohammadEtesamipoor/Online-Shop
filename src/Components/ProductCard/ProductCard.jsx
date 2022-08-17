@@ -84,7 +84,7 @@ export function ProductCard({itemProduct,itemCategory}) {
           </Heading>
           <Stack direction={"row"} align={"center"}>
             <Link
-            to="/product"
+            to={`product/${itemProduct.id}`}
             >
             
             <Box
