@@ -41,6 +41,7 @@ export const Routing = () => {
             path={PAGE.Product}
             element={<Layout main={<ProductPage />} />}
           />
+            <Route path='/product/:productId'  element={<Layout main={<ProductPage />} />}  />
           <Route
             path={PAGE.Basket}
             element={<Layout main={<BasketPage />} />}
