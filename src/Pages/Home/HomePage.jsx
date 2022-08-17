@@ -1,7 +1,10 @@
 import { GetProductsCategory } from "apis/ApiCategory";
 import { GetProducts } from "apis/ApiProduct";
 import { useEffect, useState } from "react";
-import {ProductCard} from 'Components'
+import { ProductCard } from "Components";
+import { Link } from "react-router-dom";
+import { PAGE } from "Configs/route";
+
 import {
   Box,
   Skeleton,
@@ -33,14 +36,27 @@ export function HomePage() {
           {categoryData.map((itemCategory) => (
             // Box list category box
             <Box>
-              <Heading>{itemCategory["name-fa"]}</Heading>
+              <Link
+              to={`${PAGE.Products}/${itemCategory.id}`}
+              >
+                <Heading>{itemCategory["name-fa"]}</Heading>
+              </Link>
               {/* Box list product card */}
-              <Box display="flex" flexWrap="wrap" gap="40px" my="20px" mx="30px">
+              <Box
+                display="flex"
+                flexWrap="wrap"
+                gap="40px"
+                my="20px"
+                mx="30px"
+              >
                 {/*Box card product */}
                 {productData.map(
                   (itemProduct) =>
                     itemProduct["category-id"] == itemCategory["id"] && (
-                      <ProductCard itemProduct={itemProduct} itemCategory={itemCategory} />
+                      <ProductCard
+                        itemProduct={itemProduct}
+                        itemCategory={itemCategory}
+                      />
                     )
                 )}
               </Box>

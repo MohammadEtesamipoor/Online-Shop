@@ -28,7 +28,7 @@ export function ProductCard({itemProduct,itemCategory}) {
         rounded={"lg"}
         pos={"relative"}
         zIndex={1}
-        bg="#e4daf383 "
+        bg="#bec6e3c9 "
         color="#2c2c2c"
       >
         <Box

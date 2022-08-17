@@ -27,21 +27,32 @@ export const Routing = () => {
   return (
     <Router>
       <Routes>
-         {/* public routes  */}
-         <Route path="*" element={<Layout main={<HomePage />} />} />
+        {/* public routes  */}
+        <Route path="*" element={<Layout main={<HomePage />} />} />
         <Route element={<PublicRoute />}>
           <Route path={PAGE.Main} element={<Layout main={<HomePage />} />} />
           <Route element={<Layout main={<HomePage />} />} />
           <Route path={PAGE.Home} element={<Navigate replace to="/" />} />
+
           <Route
             path={PAGE.Products}
             element={<Layout main={<ProductsPage />} />}
           />
           <Route
+            path={`${PAGE.Products}/:categoryId`}
+            element={<Layout main={<ProductsPage />} />}
+          />
+
+          <Route
             path={PAGE.Product}
             element={<Layout main={<ProductPage />} />}
           />
-            <Route path='/product/:productId'  element={<Layout main={<ProductPage />} />}  />
+          <Route
+            path="/product/:productId"
+            element={<Layout main={<ProductPage />} />}
+          />
+
+
           <Route
             path={PAGE.Basket}
             element={<Layout main={<BasketPage />} />}
@@ -52,7 +63,7 @@ export const Routing = () => {
           />
         </Route>
         {/* Protected Route Admin */}
-       <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route
             path={PAGE.Admin_Product}
             element={<Layout isAdmin="true" main={<AdminProductPage />} />}

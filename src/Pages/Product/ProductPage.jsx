@@ -16,6 +16,11 @@ import {
   VisuallyHidden,
   List,
   ListItem,
+  NumberInput,
+NumberInputField,
+NumberInputStepper,
+NumberIncrementStepper,
+NumberDecrementStepper
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
@@ -36,8 +41,7 @@ export function ProductPage() {
     fetchData();
   }, []);
   return (
-    <Box
-    color="#2c2c2c">
+    <Box color="#2c2c2c">
       {productData ? (
         <Container maxW={"7xl"}>
           <SimpleGrid
@@ -131,6 +135,15 @@ export function ProductPage() {
                   boxShadow: "2xl",
                 }}
               >
+                <Box ml="10px" dir="ltr">
+                <NumberInput size='xs' maxW={16} defaultValue={1} min={1} max={5}>
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>  
+                </Box>
                 افزودن به سبد خرید
               </Button>
             </Stack>
