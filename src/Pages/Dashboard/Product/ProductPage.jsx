@@ -3,6 +3,7 @@ import { GetProductsCategory } from "apis/ApiCategory";
 import { useEffect } from "react";
 import { useState } from "react";
 import { TableAdminPage } from "Components";
+import {ProductModal} from 'Components/ProductModal/ProductModal'
 import { FaEye, FaEyeSlash, FaUserAlt, FaPlus } from "react-icons/fa";
 import { DeleteButtonProduct } from "Components/Button/DeleteButtonProduct";
 import {
@@ -13,12 +14,13 @@ import {
   IconButton,
   Select,
   Skeleton,
-  Stack
+  Stack,
+  useDisclosure
 } from "@chakra-ui/react";
 
 export function AdminProductPage() {
   const [productData, setproductData] = useState([]);
-
+  const [statusModal,setStatusModal]= useState()
   const [CategoryProductData, setCategoryProductData] = useState([]);
 
   useEffect(() => {
@@ -40,6 +42,9 @@ export function AdminProductPage() {
   return (
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
     <Box h="100%">
+      {statusModal?
+      <ProductModal statusModal={statusModal} />:null
+    }
       <Box mt="20px" display="flex" justifyContent="space-between" px="4">
         <Heading color="#525261">مدیریت کالاها</Heading>
         <Select dir="ltr" w="120px" placeholder="all">
@@ -52,7 +57,13 @@ export function AdminProductPage() {
           <option value="option3">nokia</option>
           <option value="option4">huawei</option>
         </Select>
-        <Button rightIcon={<FaPlus />} colorScheme="teal" variant="outline">
+        <Button rightIcon={<FaPlus />} colorScheme="teal" variant="outline"
+        onClick={()=>{
+          statusModal=="onOpen"?
+          setStatusModal("isOpen"):
+          setStatusModal("onOpen")
+        }}
+        >
           افزودن کالا
         </Button>
       </Box>

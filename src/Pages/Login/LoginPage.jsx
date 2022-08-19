@@ -1,4 +1,4 @@
-import imgLogo from "../../Assets/Images/logoLognin.png";
+import imgLogo from "../../Assets/Images/logo.png";
 import { Formik, Form, Field } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -51,7 +51,7 @@ export function LoginPage() {
         display="flex"
         width="60%"
         height="80%"
-        bg="#4E7E95"
+        bg="#bec6e3c9"
         boxShadow="dark-lg"
         p="6"
         rounded="2xl"
@@ -84,13 +84,13 @@ export function LoginPage() {
           >
             <FormControl
               px={5}
-              gap="6"
+              gap="3"
               display="flex"
               flexDirection="column"
               alignItems="center"
-              color="#E5ECF4"
+              color="#2c2c2c"
             >
-              <Heading color="#E5ECF4">ورود کاربر</Heading>
+              <Heading color="#2c2c2c">ورود کاربر</Heading>
               {/* Use Name */}
               <Box>
               <FormControl isInvalid={isError}>
@@ -105,7 +105,7 @@ export function LoginPage() {
                   />
                   <InputRightElement
                     pointerEvents="none"
-                    children={<FaUserAlt color="#ff934d" />}
+                    children={<FaUserAlt color="#4e7e95" />}
                   />
                 </InputGroup>
                 {!isError ? (
@@ -113,7 +113,7 @@ export function LoginPage() {
                     
                   </FormHelperText>
                 ) : (
-                  <FormErrorMessage dir="rtl" color="#f1f1f1">نام کاربری را وارد کنید</FormErrorMessage>
+                  <FormErrorMessage dir="rtl" color="#944e4e">نام کاربری را وارد کنید</FormErrorMessage>
                 )}
                 </FormControl>
               </Box>
@@ -124,7 +124,7 @@ export function LoginPage() {
                 <InputGroup width="300px">
                   <InputRightElement
                     pointerEvents="none"
-                    children={<FaLock color="#ff934d" />}
+                    children={<FaLock color="#4e7e95" />}
                   />
                   <Input
                     _placeholder={{ color: "#a0c9dd" }}
@@ -137,9 +137,9 @@ export function LoginPage() {
                   <InputLeftElement>
                     <Box onClick={handleClick}>
                       {show ? (
-                        <FaEye color="#ff934d" />
+                        <FaEye color="#4e7e95" />
                       ) : (
-                        <FaEyeSlash color="#ff934d" />
+                        <FaEyeSlash color="#4e7e95 " />
                       )}
                     </Box>
                   </InputLeftElement>
@@ -150,7 +150,7 @@ export function LoginPage() {
                     
                   </FormHelperText>
                 ) : (
-                  <FormErrorMessage dir="rtl" color="#f1f1f1">رمز عبور را وارد کنید</FormErrorMessage>
+                  <FormErrorMessage dir="rtl" color="#944e4e">رمز عبور را وارد کنید</FormErrorMessage>
                 )}
                 </FormControl>
               </Box>
@@ -160,9 +160,14 @@ export function LoginPage() {
                 fontSize="22px"
                 textAlign="center"
                 width="70%"
-                bg="#FFAD70"
-                color="#4E7E95"
+                bg="#4e7e95"
+                color="#E5ecf4"
                 variant="solid"
+                colorScheme='whiteAlpha'
+                _hover={{
+                  color:"#585858",
+                    bg:"#e5ecf4"
+                }}
                 onClick={() => {
                   navigate("/admin/product");
                 }}
