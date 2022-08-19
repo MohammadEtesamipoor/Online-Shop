@@ -1,3 +1,6 @@
+import { DeleteButtonProduct } from "Components/Button/DeleteButtonProduct";
+// import {} from "../../upload/index";
+
 import {
   TableContainer,
   Table,
@@ -11,19 +14,41 @@ import {
   Box,
   Button,
   Heading,
+  CloseButton,
   Link,
   Tabs,
   TabList,
   Tab,
-  Image
+  Image,
+  useToast,
+  ModalOverlay,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+  Text,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { DeleteProducts } from "apis/ApiProduct";
 import { FaEdit, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 export const TableAdminPage = (props) => {
   const [pagination, setPagination] = useState(10);
+  const [dataProduct, setDataProduct] = useState(props.listProduct);
+  const [test, setTest] = useState();
   const avgCountProduct = Math.ceil(props.listProduct.length / 10);
   const paginationNumbers = Array.from(Array(avgCountProduct).keys());
+
+  const getStatusDeleteProduct = (item) => {
+    const dataFilter = dataProduct.filter((element) => element.id !== item);
+    setDataProduct(dataFilter);
+
+    // delte product from db
+    // DeleteProducts(item)
+  };
+
   const handelPagination = (item) => {
     setPagination(item * 10);
   };
@@ -51,33 +76,41 @@ export const TableAdminPage = (props) => {
             </Tr>
           </Thead>
           <Tbody>
-            {props.listProduct
-              .slice(pagination - 10, pagination)
-              .map((item) => (
-                <Tr bg="#A0C9DD" key={item.id} >
-                  <Td>
-                    <Image
-                      boxSize="70px"
-                      objectFit="cover"
-                      src="https://www.freepnglogos.com/uploads/mobile-png/mobile-phone-icons-icon-7.png"
-                      alt="Dan Abramov"
-                    />
-                  </Td>
+            {dataProduct.slice(pagination - 10, pagination).map((item) => (
+              
+              <Tr bg="#A0C9DD" key={item.id}>
+                <Td > 
+                  <div
+                    style={{
+                      backgroundImage: `url(${require(`upload/${item.images[0]}`)})`, 
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize:" contain, cover",
+                      backgroundPosition: "bottom",
+                      width: "120px",
+                      height: "50px",
+                    }}
+                  ></div>
+                </Td>
 
-                  <Td>{item["product-name-fa"]}</Td>
-                  <Td>{props.listCategory[item["category-id"]]["name-en"]}</Td>
-                  <Td>
-                    <Box display="flex" gap={6}>
-                      <Link display="flex" gap={2}>
-                        ویرایش <FaRegEdit mx="2px" />
-                      </Link>
-                      <Link display="flex" gap={2}>
-                        حذف <FaRegTrashAlt mx="2px" />
-                      </Link>
-                    </Box>
-                  </Td>
-                </Tr>
-              ))}
+                <Td >{item["product-name-fa"]}</Td>
+                <Td>{props.listCategory.map(itemCategory=>(
+                        itemCategory["id"]==item["category-id"]?
+                          itemCategory["name-en"]:null
+                         ))}</Td>
+                <Td>
+                  <Box display="flex" gap={6}>
+                    <Link display="flex" gap={2}>
+                      ویرایش <FaRegEdit mx="2px" />
+                    </Link>
+                    <DeleteButtonProduct
+                      getStatusDeleteProduct={getStatusDeleteProduct}
+                      idProduct={item.id}
+                      nameProduct={item["product-name-fa"]}
+                    />
+                  </Box>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
           <Tfoot>
             <Tr>

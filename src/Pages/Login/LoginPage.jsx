@@ -1,6 +1,6 @@
-import imgLogo from "../../Assets/Images/logoLognin.png";
+import imgLogo from "../../Assets/Images/logo.png";
 import { Formik, Form, Field } from "formik";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -20,16 +20,21 @@ import {
   FormLabel,
   FormErrorMessage,
   Spacer,
-  useColorMode
+  useColorMode,
+  FormHelperText
 } from "@chakra-ui/react";
-import { LoginValidtion } from "Validations/LoginValidtion";
+// import { LoginValidtion } from "Validations/LoginValidtion";
 import React from "react";
 import { FaEye, FaEyeSlash, FaUserAlt, FaLock } from "react-icons/fa";
-export function LoginPage() { 
-  const userLoginValidation = LoginValidtion();
+export function LoginPage() {
   const [show, setShow] = React.useState(false);
+  const [input, setInput] = React.useState('')
+
+  const handleInputChange = (e) => setInput(e.target.value)
+
+  const isError = input === ''
   const handleClick = () => setShow(!show);
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   return (
     <Box
       dir="ltr"
@@ -46,7 +51,7 @@ export function LoginPage() {
         display="flex"
         width="60%"
         height="80%"
-        bg="#4E7E95"
+        bg="#bec6e3c9"
         boxShadow="dark-lg"
         p="6"
         rounded="2xl"
@@ -79,15 +84,16 @@ export function LoginPage() {
           >
             <FormControl
               px={5}
-              gap="6"
+              gap="3"
               display="flex"
               flexDirection="column"
               alignItems="center"
-              color="#E5ECF4"
+              color="#2c2c2c"
             >
-              <Heading color="#E5ECF4">ورود کاربر</Heading>
+              <Heading color="#2c2c2c">ورود کاربر</Heading>
               {/* Use Name */}
               <Box>
+              <FormControl isInvalid={isError}>
                 <InputGroup width="300px">
                   <Input
                     _placeholder={{ color: "#a0c9dd" }}
@@ -95,20 +101,30 @@ export function LoginPage() {
                     variant="flushed"
                     placeholder="نام کاربری"
                     size="lg"
+                    onChange={handleInputChange}
                   />
                   <InputRightElement
                     pointerEvents="none"
-                    children={<FaUserAlt color="#ff934d" />}
+                    children={<FaUserAlt color="#4e7e95" />}
                   />
                 </InputGroup>
+                {!isError ? (
+                  <FormHelperText>
+                    
+                  </FormHelperText>
+                ) : (
+                  <FormErrorMessage dir="rtl" color="#944e4e">نام کاربری را وارد کنید</FormErrorMessage>
+                )}
+                </FormControl>
               </Box>
               <Spacer />
               {/* password */}
               <Box>
+              <FormControl isInvalid={isError}>
                 <InputGroup width="300px">
                   <InputRightElement
                     pointerEvents="none"
-                    children={<FaLock color="#ff934d" />}
+                    children={<FaLock color="#4e7e95" />}
                   />
                   <Input
                     _placeholder={{ color: "#a0c9dd" }}
@@ -121,29 +137,43 @@ export function LoginPage() {
                   <InputLeftElement>
                     <Box onClick={handleClick}>
                       {show ? (
-                        <FaEye color="#ff934d" />
+                        <FaEye color="#4e7e95" />
                       ) : (
-                        <FaEyeSlash color="#ff934d" />
+                        <FaEyeSlash color="#4e7e95 " />
                       )}
                     </Box>
                   </InputLeftElement>
                 </InputGroup>
+
+                {!isError ? (
+                  <FormHelperText>
+                    
+                  </FormHelperText>
+                ) : (
+                  <FormErrorMessage dir="rtl" color="#944e4e">رمز عبور را وارد کنید</FormErrorMessage>
+                )}
+                </FormControl>
               </Box>
 
-                <Button
-                  py="4"
-                  fontSize="22px"
-                  textAlign="center"
-                 width="70%"
-                  bg="#FFAD70"
-                  color="#4E7E95"
-                  variant="solid"
-                  onClick={()=>{
-                    navigate('/admin/product')
-                  }}
-                >
-                  ورود
-                </Button>
+              <Button
+                py="4"
+                fontSize="22px"
+                textAlign="center"
+                width="70%"
+                bg="#4e7e95"
+                color="#E5ecf4"
+                variant="solid"
+                colorScheme='whiteAlpha'
+                _hover={{
+                  color:"#585858",
+                    bg:"#e5ecf4"
+                }}
+                onClick={() => {
+                  navigate("/admin/product");
+                }}
+              >
+                ورود
+              </Button>
             </FormControl>
           </Flex>
           {/* <form onSubmit={userLoginValidation.handleSubmit}>

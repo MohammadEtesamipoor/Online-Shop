@@ -29,10 +29,13 @@ const Header = () => {
       h="80px"
       display="flex"
       position="fixed"
-      bg="#4E7E95"
-      color="#E5ECf4"
+      boxShadow='md' 
+      color="#383442b8"
+       bg="#f3f3f3f2"
+      fontWeight={700}
       justifyContent="space-between"
       px={8}
+      zIndex= "100"
     >
       <Flex  gap="8" alignItems="center"  >
         <Link to="/">
@@ -49,11 +52,11 @@ const Header = () => {
             pr="40px"
             variant="flushed"
             placeholder="جستجو"
-            color="#E5ECF4"
+            color="#383442b8"
             textAlign="right"
             borderColor='#E5ECF4'
             focusBorderColor='#E5ECF4'
-            _placeholder={{ color: '#bdd8e4' }}
+            _placeholder={{ color: '#38344290' }}
           />
           <InputRightElement children={<FaSearch color="green.500" />} />
         </InputGroup>
