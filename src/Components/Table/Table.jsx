@@ -46,7 +46,7 @@ export const TableAdminPage = (props) => {
     setDataProduct(dataFilter);
 
     // delte product from db
-    // DeleteProducts(item)
+    DeleteProducts(item)
   };
 
   const handelPagination = (item) => {
