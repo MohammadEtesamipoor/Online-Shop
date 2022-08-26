@@ -82,7 +82,7 @@ export const TableAdminPage = (props) => {
                 <Td > 
                   <div
                     style={{
-                      backgroundImage: `url(${require(`upload/${item.images[0]}`)})`, 
+                      backgroundImage: `url(http://localhost:3001/files/${item.images[0]})`, 
                       backgroundRepeat: "no-repeat",
                       backgroundSize:" contain, cover",
                       backgroundPosition: "bottom",

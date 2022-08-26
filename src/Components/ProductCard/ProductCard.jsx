@@ -44,7 +44,7 @@ export function ProductCard({itemProduct,itemCategory}) {
             pos: "absolute",
             top: 5,
             left: 0,
-            backgroundImage: `url(${require(`upload/${itemProduct.images[0]}`)})`,
+            backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[0]})`, 
             filter: "blur(15px)",
             zIndex: -1,
           }}
@@ -59,7 +59,7 @@ export function ProductCard({itemProduct,itemCategory}) {
           >
             <div
               style={{
-                backgroundImage: `url(${require(`upload/${itemProduct.images[0]}`)})`,
+                backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[0]})`, 
                 backgroundRepeat: "no-repeat",
                 backgroundSize: " contain, cover",
                 backgroundPosition: "bottom",

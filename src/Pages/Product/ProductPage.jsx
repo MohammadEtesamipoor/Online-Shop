@@ -53,7 +53,7 @@ export function ProductPage() {
               <Image
                 rounded={"md"}
                 alt={"product image"}
-                src={require(`upload/${productData[0].images[1]}`)}
+                // src={require(`http://localhost:3001/files/${productData[0].images[0]}`)}
                 fit={"contain"}
                 align={"center"}
                 w={"100%"}
