@@ -6,10 +6,10 @@ import {
   ModalContent,
   ModalHeader,
   NumberInput,
-NumberInputField,
-NumberInputStepper,
-NumberIncrementStepper,
-NumberDecrementStepper,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
   ModalCloseButton,
   ModalBody,
   Lorem,
@@ -21,6 +21,7 @@ NumberDecrementStepper,
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Image,
   FormHelperText,
   Select,
   Box,
@@ -44,9 +45,12 @@ NumberDecrementStepper,
 import { AddProducts } from "apis/ApiProduct";
 import { UploadImage } from "apis/ApiUploadImage";
 import React, { useEffect, useState, useRef } from "react";
-export function ProductModal({ statusModal }) {
+
+
+export function ProductModal({ statusModal,product }) {
   const toast = useToast();
   const [sliderValueStart, setSliderValueStart] = useState("30");
+  const [stateImg, setStateImg] = useState([]);
   const [sliderValueEnd, setSliderValueEnd] = useState("54");
   const [showTooltip, setShowTooltip] = useState(true);
   const [checkSize, setCheckSize] = useState(38, 40, 42);
@@ -54,6 +58,7 @@ export function ProductModal({ statusModal }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const filesRef = useRef(null);
   const refCheackbox = useRef(null);
+
   useEffect(() => {
     onOpen();
   }, [statusModal]);
@@ -103,6 +108,14 @@ export function ProductModal({ statusModal }) {
     });
   };
 
+  const changeImg = (event) => {
+    const imgList = [];
+    if (event.target.files && event.target.files[0]) {
+      for (let item of event.target.files)
+        imgList.push(URL.createObjectURL(item));
+    }
+    setStateImg([...imgList]);
+  };
   const checkBox = (check) => {
     setCheckSize(check);
   };
@@ -123,24 +136,44 @@ export function ProductModal({ statusModal }) {
             <ModalCloseButton />
             <ModalHeader mr="20px">افزودن/ویرایش محصول</ModalHeader>
             <ModalBody pb={6} display="flex" flexDirection="column" gap="60px">
-              <FormControl width="20" isRequired>
-                <FormLabel>انتخاب تصویر</FormLabel>
-                <Input
-                  variant="flushed"
-                  type="file"
-                  multiple
-                  ref={filesRef}
-
-                />
-              </FormControl>
               <Box display="flex" justifyContent="space-between" gap="40px">
-                <FormControl     isRequired>
+                <FormControl width="20%" isRequired>
+                  <FormLabel>انتخاب تصویر</FormLabel>
+                  <Input
+                    variant="flushed"
+                    type="file"
+                    multiple
+                    ref={filesRef}
+                    onChange={(e) => changeImg(e)}
+                  />
+                </FormControl>
+                <Box
+                  display="flex"
+                  gap="5px"
+                  flexWrap="wrap"
+                  border="1px"
+                  borderColor="gray.200"
+                  width="80%"
+                >
+                  {stateImg?.map((item) => (
+                    <Image
+                      boxSize="100px"
+                      objectFit="contain"
+                      src={item}
+                      alt="product"
+                    />
+                  ))}
+                </Box>
+              </Box>
+
+              <Box display="flex" justifyContent="space-between" gap="40px">
+                <FormControl isRequired>
                   <FormLabel>نام کالا</FormLabel>
-                  <Input name="product-name-fa" variant="flushed" />
+                  <Input name="product-name-fa" variant="flushed" value={product&&product['product-name-fa']}/>
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>قیمت کالا</FormLabel>
-                  <Input name="price" type="number" variant="flushed" />
+                  <Input name="price" type="number" variant="flushed" value={product&&product['price']} />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>دسته بندی</FormLabel>
@@ -167,7 +200,7 @@ export function ProductModal({ statusModal }) {
                     size="sm"
                     maxW={100}
                     max={100}
-                    defaultValue={3}
+                    defaultValue={product?product['count']:3}
                     min={1}
                     textAlign="right"
                   >
@@ -178,14 +211,13 @@ export function ProductModal({ statusModal }) {
                     </NumberInputStepper>
                   </NumberInput>
                 </FormControl>
-              <Box width="90%">
-                <FormLabel>سایز</FormLabel>
-                <SliderThumbWithTooltip checkBox={checkBox} />
-              </Box>
+                <Box width="90%">
+                  <FormLabel>سایز</FormLabel>
+                  <SliderThumbWithTooltip checkBox={checkBox} />
+                </Box>
               </Box>
 
-              <Box>
-              </Box>
+              <Box></Box>
 
               <Box>
                 <FormControl isRequired>
@@ -195,6 +227,7 @@ export function ProductModal({ statusModal }) {
                     size="sm"
                     textAlign="right"
                     name="description"
+                    value={product&&product['description']}
                   />
                 </FormControl>
               </Box>
@@ -305,7 +338,7 @@ const SliderThumbWithTooltip = ({ checkBox }) => {
           </RangeSlider>
           <Box mt="50px">
             {/* <FormLabel>انتخاب تصویر</FormLabel> */}
-            <CheckboxGroup colorScheme="teal" defaultValue={["38", "40", "42"]}>
+            <CheckboxGroup colorScheme="teal">
               <Stack
                 onChange={cheackbox}
                 spacing={[1, 5]}

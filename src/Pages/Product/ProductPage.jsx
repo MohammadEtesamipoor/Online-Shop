@@ -17,10 +17,10 @@ import {
   List,
   ListItem,
   NumberInput,
-NumberInputField,
-NumberInputStepper,
-NumberIncrementStepper,
-NumberDecrementStepper
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
@@ -50,15 +50,18 @@ export function ProductPage() {
             py={{ base: 18, md: 24 }}
           >
             <Flex>
-              <Image
-                rounded={"md"}
-                alt={"product image"}
-                // src={require(`http://localhost:3001/files/${productData[0].images[0]}`)}
-                fit={"contain"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "100%", sm: "400px", lg: "500px" }}
-              />
+              <Box>
+                <div
+                  style={{
+                    backgroundImage: `url(http://localhost:3001/files/${productData[0].images[0]})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: " contain, cover",
+                    backgroundPosition: "bottom",
+                    width: "282px",
+                    height: "230px",
+                  }}
+                ></div>
+              </Box>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={"header"}>
@@ -136,13 +139,19 @@ export function ProductPage() {
                 }}
               >
                 <Box ml="10px" dir="ltr">
-                <NumberInput size='xs' maxW={16} defaultValue={1} min={1} max={5}>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>  
+                  <NumberInput
+                    size="xs"
+                    maxW={16}
+                    defaultValue={1}
+                    min={1}
+                    max={5}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
                 </Box>
                 افزودن به سبد خرید
               </Button>

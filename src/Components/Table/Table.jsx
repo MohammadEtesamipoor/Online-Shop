@@ -1,5 +1,6 @@
 import { DeleteButtonProduct } from "Components/Button/DeleteButtonProduct";
 // import {} from "../../upload/index";
+import { ProductModal } from "Components/ProductModal/ProductModal";
 
 import {
   TableContainer,
@@ -35,6 +36,8 @@ import React, { useEffect, useState } from "react";
 import { DeleteProducts } from "apis/ApiProduct";
 import { FaEdit, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 export const TableAdminPage = (props) => {
+  const [statusModal, setStatusModal] = useState();
+  const [ProductModalEdit, setProductModalEdit] = useState();
   const [pagination, setPagination] = useState(10);
   const [dataProduct, setDataProduct] = useState(props.listProduct);
   const [test, setTest] = useState();
@@ -46,7 +49,7 @@ export const TableAdminPage = (props) => {
     setDataProduct(dataFilter);
 
     // delte product from db
-    DeleteProducts(item)
+    DeleteProducts(item);
   };
 
   const handelPagination = (item) => {
@@ -54,6 +57,7 @@ export const TableAdminPage = (props) => {
   };
   return (
     <>
+      {statusModal ? <ProductModal product={ProductModalEdit}  statusModal={statusModal} /> : null}
       <TableContainer maxWidth="100%" whiteSpace="normal">
         <Table variant="striped">
           <TableCaption>
@@ -77,14 +81,13 @@ export const TableAdminPage = (props) => {
           </Thead>
           <Tbody>
             {dataProduct.slice(pagination - 10, pagination).map((item) => (
-              
               <Tr bg="#A0C9DD" key={item.id}>
-                <Td > 
+                <Td>
                   <div
                     style={{
-                      backgroundImage: `url(http://localhost:3001/files/${item.images[0]})`, 
+                      backgroundImage: `url(http://localhost:3001/files/${item.images[0]})`,
                       backgroundRepeat: "no-repeat",
-                      backgroundSize:" contain, cover",
+                      backgroundSize: " contain, cover",
                       backgroundPosition: "bottom",
                       width: "120px",
                       height: "50px",
@@ -92,14 +95,26 @@ export const TableAdminPage = (props) => {
                   ></div>
                 </Td>
 
-                <Td >{item["product-name-fa"]}</Td>
-                <Td>{props.listCategory.map(itemCategory=>(
-                        itemCategory["id"]==item["category-id"]?
-                          itemCategory["name-en"]:null
-                         ))}</Td>
+                <Td>{item["product-name-fa"]}</Td>
+                <Td>
+                  {props.listCategory.map((itemCategory) =>
+                    itemCategory["id"] == item["category-id"]
+                      ? itemCategory["name-en"]
+                      : null
+                  )}
+                </Td>
                 <Td>
                   <Box display="flex" gap={6}>
-                    <Link display="flex" gap={2}>
+                    <Link
+                      display="flex"
+                      gap={2}
+                      onClick={() => {
+                        statusModal == "onOpen"
+                          ? setStatusModal("isOpen")
+                          : setStatusModal("onOpen");
+                          setProductModalEdit(item)
+                      }}
+                    >
                       ویرایش <FaRegEdit mx="2px" />
                     </Link>
                     <DeleteButtonProduct

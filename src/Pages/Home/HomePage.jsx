@@ -17,6 +17,7 @@ import {
   Image,
   Tooltip,
 } from "@chakra-ui/react";
+import DemoCarousel from "Components/Carousel/Carousel";
 export function HomePage() {
   const [categoryData, setCategoryData] = useState();
   const [productData, setProductData] = useState();
@@ -31,6 +32,7 @@ export function HomePage() {
   }, []);
   return (
     <Box mx="32px" my="32px">
+      <DemoCarousel />
       {productData ? (
         <Box display="flex" flexDirection="column" gap="40px">
           {categoryData.map((itemCategory) => (

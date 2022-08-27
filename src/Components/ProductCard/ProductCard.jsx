@@ -13,12 +13,12 @@ import {
     Tooltip,
   } from "@chakra-ui/react";
 export function ProductCard({itemProduct,itemCategory}) {
-    return ( 
-        <Box
+    return (
+      <Box
         _hover={{
           transform: "translateY(-10px)",
           boxShadow: "3xl",
-         
+          
         }}
         role={"group"}
         p={6}
@@ -31,6 +31,9 @@ export function ProductCard({itemProduct,itemCategory}) {
         bg="#bec6e3c9 "
         color="#2c2c2c"
       >
+        <Link
+        to={`product/${itemProduct.id}`}
+        > 
         <Box
           rounded={"lg"}
           mt={-12}
@@ -85,9 +88,7 @@ export function ProductCard({itemProduct,itemCategory}) {
             {itemProduct["product-name-fa"]}
           </Heading>
           <Stack direction={"row"} align={"center"}>
-            <Link
-            to={`product/${itemProduct.id}`}
-            >
+
             
             <Box
               _hover={{
@@ -98,7 +99,6 @@ export function ProductCard({itemProduct,itemCategory}) {
               <FaShoppingCart
               fontSize="50px" />
             </Box>
-            </Link>
             <Text fontWeight={800} fontSize={"xl"}>
               {itemProduct["price"]}
             </Text>
@@ -110,6 +110,7 @@ export function ProductCard({itemProduct,itemCategory}) {
             </Text>
           </Stack>
         </Stack>
+              </Link>
       </Box>
      );
 }
