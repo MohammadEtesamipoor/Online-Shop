@@ -1,0 +1,74 @@
+
+
+.swiper {
+  width: 340px;
+  height: 320px;
+}
+
+.swiperSlide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  
+}
+
+.swiperSlide:nth-child(1n) {
+  background-color: rgba(206, 17, 17, 0.692);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.swiperSlide:nth-child(2n) {
+  background-color: rgb(0, 140, 255);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.swiperSlide:nth-child(3n) {
+  background-color: rgb(10, 184, 111);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.swiperSlide:nth-child(4n) {
+  background-color: rgb(211, 122, 7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0);
+
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.swiperSlide:nth-child(5n) {
+  background-color: rgb(118, 163, 12);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0);
+
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.swiperSlide:nth-child(6n) {
+  background-color: rgb(180, 10, 47);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0);
+
+  border-radius: 12px;
+  border: 1px solid rgba(209, 213, 219, 0.3);
+}

@@ -15,11 +15,15 @@ import {
   Input,
   InputRightElement,
   InputLeftElement,
+  AvatarGroup,
+  Avatar,
+  AvatarBadge,
 } from "@chakra-ui/react";
 
 import { PhoneIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import imgLogo from "../../Assets/Images/logo.png";
-import { FaShoppingBag, FaSearch,FaUserCircle } from "react-icons/fa";
+import { FaShoppingBag, FaSearch, FaUserCircle } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 const Header = () => {
   return (
@@ -29,17 +33,17 @@ const Header = () => {
       h="80px"
       display="flex"
       position="fixed"
-      boxShadow='md' 
+      boxShadow="md"
       color="#383442b8"
-       bg="#f3f3f3f2"
+      bg="#ffffff"
       fontWeight={700}
       justifyContent="space-between"
       px={8}
-      zIndex= "100"
+      zIndex="100"
     >
-      <Flex  gap="8" alignItems="center"  >
+      <Flex gap="8" alignItems="center">
         <Link to="/">
-          <Flex  gap="4" alignItems="center">
+          <Flex gap="4" alignItems="center">
             <Image boxSize="80px" src={imgLogo} alt="Logo" />
             <Hide below="sm">
               <Heading>تاپ کالا</Heading>
@@ -47,36 +51,49 @@ const Header = () => {
           </Flex>
         </Link>
 
-        <InputGroup size="md" width={{ base: "150px", sm:"250px", md: "350px",lg:"450px" }}>
+        <InputGroup
+          size="md"
+          width={{ base: "150px", sm: "250px", md: "350px", lg: "450px" }}
+        >
           <Input
             pr="40px"
             variant="flushed"
             placeholder="جستجو"
             color="#383442b8"
             textAlign="right"
-            borderColor='#E5ECF4'
-            focusBorderColor='#E5ECF4'
-            _placeholder={{ color: '#38344290' }}
+            borderColor="#E5ECF4"
+            focusBorderColor="#E5ECF4"
+            _placeholder={{ color: "#38344290" }}
           />
           <InputRightElement children={<FaSearch color="green.500" />} />
         </InputGroup>
       </Flex>
 
-      <Flex  gap="6" alignItems="center">
+      <Flex gap="6" alignItems="center">
         <Link to="/login">
           <Hide below="sm">
-          <Text fontSize="md">ورود</Text>
-           </Hide>
-           <Show below="sm">
-             <FaUserCircle size={20} />
-           </Show>
+            <Text fontSize="md">ورود</Text>
+          </Hide>
+          <Show below="sm">
+            <FaUserCircle size={20} />
+          </Show>
         </Link>
         <Link to="/basket">
-          <Flex  gap="2" alignItems="center">
-            <FaShoppingBag size={20} />
-           <Hide below="sm">
-           <Text fontSize="md">سبد خرید</Text>
-           </Hide>
+          <Flex gap="2" alignItems="center">
+            <AvatarGroup spacing="2rem">
+              <Avatar
+                boxSize="2.25em"
+                color="gray.100"
+                icon={<FaShoppingBag  fontSize="1.5rem" />}
+              >
+                <AvatarBadge color="gray.700" boxSize="1.5em" bg="gray.100">
+                  54
+                </AvatarBadge>
+              </Avatar>
+            </AvatarGroup>
+            <Hide below="sm">
+              <Text fontSize="md">سبد خرید</Text>
+            </Hide>
           </Flex>
         </Link>
       </Flex>

@@ -1,4 +1,15 @@
 import { useParams } from "react-router-dom";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cards";
+
+import styles from "./styles.module.css";
+
+// import required modules
+import { EffectCards } from "swiper";
 import {
   Box,
   chakra,
@@ -17,10 +28,10 @@ import {
   List,
   ListItem,
   NumberInput,
-NumberInputField,
-NumberInputStepper,
-NumberIncrementStepper,
-NumberDecrementStepper
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
@@ -35,13 +46,14 @@ export function ProductPage() {
       await GetProducts().then((res) => {
         const test = res.data.filter((item) => item.id == productId);
         setProductData(test);
-        console.log(productData[0].images);
       });
     };
     fetchData();
   }, []);
   return (
-    <Box color="#2c2c2c">
+    <Box
+    overflowX={"hidden"}
+     color="#2c2c2c">
       {productData ? (
         <Container maxW={"7xl"}>
           <SimpleGrid
@@ -50,15 +62,31 @@ export function ProductPage() {
             py={{ base: 18, md: 24 }}
           >
             <Flex>
-              <Image
-                rounded={"md"}
-                alt={"product image"}
-                src={require(`upload/${productData[0].images[1]}`)}
-                fit={"contain"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "100%", sm: "400px", lg: "500px" }}
-              />
+              <Box mx="100px">
+                <Swiper
+                  dir="ltr"
+                  effect={"cards"}
+                  grabCursor={true}
+                  modules={[EffectCards]}
+                  className={styles.swiper}
+                >
+                  {productData[0].images.map((item) => (
+                    <SwiperSlide
+                  className={styles.swiperSlide }      
+                    >
+                      <div
+                        style={{
+                          backgroundImage: `url(http://localhost:3001/files/${item})`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: " contain, cover",
+                          backgroundPosition: "bottom",
+                          transform: 'rotate(-45deg)'
+                        }}
+                      ></div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </Box>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={"header"}>
@@ -93,7 +121,7 @@ export function ProductPage() {
                   >
                     مشخصات فنی
                   </Text>
-
+                  {/* 
                   <List spacing={2}>
                     <ListItem>
                       <Text as={"span"} fontWeight={"bold"}>
@@ -115,7 +143,7 @@ export function ProductPage() {
                         ]
                       }
                     </ListItem>
-                  </List>
+                  </List> */}
                 </Box>
               </Stack>
 
@@ -136,13 +164,19 @@ export function ProductPage() {
                 }}
               >
                 <Box ml="10px" dir="ltr">
-                <NumberInput size='xs' maxW={16} defaultValue={1} min={1} max={5}>
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>  
+                  <NumberInput
+                    size="xs"
+                    maxW={16}
+                    defaultValue={1}
+                    min={1}
+                    max={5}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
                 </Box>
                 افزودن به سبد خرید
               </Button>

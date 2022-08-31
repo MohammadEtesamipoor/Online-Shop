@@ -1,6 +1,14 @@
 import { GET_PRODUCTS } from 'Configs/url';
 import HttpService from 'Services/HTTP.Service';
 
+export async function AddProducts(data) {
+    try {
+        const response = await HttpService.post(GET_PRODUCTS,data);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
 export async function GetProducts() {
     try {
         const response = await HttpService.get(GET_PRODUCTS);
