@@ -1,0 +1,22 @@
+
+  
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide {
+    /* Center slide text vertically */
+    height:400px;
+    background-color:rgba(132, 0, 255, 0.267);
+    border-radius: 20px;
+  }
+  
+
+
+  .swiper-slide div{
+    display: block;
+    width: 100%;
+    height:100%;
+    /* background-color: red;     */
+  }
+  

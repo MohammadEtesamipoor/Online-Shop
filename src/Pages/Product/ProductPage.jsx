@@ -1,4 +1,15 @@
 import { useParams } from "react-router-dom";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cards";
+
+import styles from "./styles.module.css";
+
+// import required modules
+import { EffectCards } from "swiper";
 import {
   Box,
   chakra,
@@ -35,13 +46,14 @@ export function ProductPage() {
       await GetProducts().then((res) => {
         const test = res.data.filter((item) => item.id == productId);
         setProductData(test);
-        console.log(productData[0].images);
       });
     };
     fetchData();
   }, []);
   return (
-    <Box color="#2c2c2c">
+    <Box
+    overflowX={"hidden"}
+     color="#2c2c2c">
       {productData ? (
         <Container maxW={"7xl"}>
           <SimpleGrid
@@ -50,17 +62,30 @@ export function ProductPage() {
             py={{ base: 18, md: 24 }}
           >
             <Flex>
-              <Box>
-                <div
-                  style={{
-                    backgroundImage: `url(http://localhost:3001/files/${productData[0].images[0]})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: " contain, cover",
-                    backgroundPosition: "bottom",
-                    width: "282px",
-                    height: "230px",
-                  }}
-                ></div>
+              <Box mx="100px">
+                <Swiper
+                  dir="ltr"
+                  effect={"cards"}
+                  grabCursor={true}
+                  modules={[EffectCards]}
+                  className={styles.swiper}
+                >
+                  {productData[0].images.map((item) => (
+                    <SwiperSlide
+                  className={styles.swiperSlide }      
+                    >
+                      <div
+                        style={{
+                          backgroundImage: `url(http://localhost:3001/files/${item})`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: " contain, cover",
+                          backgroundPosition: "bottom",
+                          transform: 'rotate(-45deg)'
+                        }}
+                      ></div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </Box>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
@@ -96,7 +121,7 @@ export function ProductPage() {
                   >
                     مشخصات فنی
                   </Text>
-
+                  {/* 
                   <List spacing={2}>
                     <ListItem>
                       <Text as={"span"} fontWeight={"bold"}>
@@ -118,7 +143,7 @@ export function ProductPage() {
                         ]
                       }
                     </ListItem>
-                  </List>
+                  </List> */}
                 </Box>
               </Stack>
 
