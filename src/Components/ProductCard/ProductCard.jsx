@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart, FaPlus } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { ADD_CART } from "store/type/BasketType";
 import {
   Box,
   Skeleton,
@@ -12,10 +14,19 @@ import {
   Image,
   Tooltip,
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  ButtonGroup
 } from "@chakra-ui/react";
 import { useState } from "react";
 export function ProductCard({ itemProduct, itemCategory }) {
-  console.log("test")
+  const dispatch = useDispatch();
+
   const [hoverImgProduct, setHoverImgProduct] = useState(0);
   const handelMouseOver = () => {
     hoverImgProduct === 0 && setHoverImgProduct(1);
@@ -23,9 +34,9 @@ export function ProductCard({ itemProduct, itemCategory }) {
   const handelMouseOut = () => {
     hoverImgProduct !== 0 && setHoverImgProduct(0);
   };
-  const handelHoverImg=(index)=>{
-    index&&setHoverImgProduct(index)
-  }
+  const handelHoverImg = (index) => {
+    index && setHoverImgProduct(index);
+  };
   return (
     <Box
       onMouseEnter={handelMouseOver}
@@ -85,16 +96,46 @@ export function ProductCard({ itemProduct, itemCategory }) {
           </Link>
           {hoverImgProduct !== 0 ? (
             <Box display="flex" justifyContent="center">
-              <Button
-                leftIcon={<FaPlus fontSize="20px" />}
-                bg="white"
-                color="#666666"
-                variant="outline"
-                borderColor="#96969652"
-                filter="blur(0.4px)"
-              >
-                اضافه کردن به سبد خرید
-              </Button>
+              <Popover isLazy>
+                <PopoverTrigger>
+                  <Button
+                    leftIcon={<FaPlus fontSize="20px" />}
+                    bg="white"
+                    color="#666666"
+                    variant="outline"
+                    borderColor="#96969652"
+                    filter="blur(0.4px)"
+                  >
+                    اضافه کردن به سبد خرید
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent borderColor="gray.100">
+                  <PopoverHeader mr="25px" fontWeight="semibold">
+                    انتخاب سایز کفش
+                  </PopoverHeader>
+                  <PopoverArrow />
+                  <PopoverCloseButton />
+                  <PopoverBody>
+                    <ButtonGroup flexWrap="wrap" gap="10px" size="sm" isAttached variant="outline">
+                      {
+                        itemProduct.checkSize.map(sizeShoes=>(
+                         <Button
+                         onClick={() =>
+                          dispatch({
+                            type: ADD_CART,
+                            paylad: {
+                              id: itemProduct.id,
+                              sizeShoes:sizeShoes
+                            },
+                          })
+                        }
+                         >{sizeShoes}</Button>
+                        ))
+                      }
+                    </ButtonGroup>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
             </Box>
           ) : null}
         </Box>
@@ -126,27 +167,36 @@ export function ProductCard({ itemProduct, itemCategory }) {
           </Stack>
         </Stack>
       ) : (
-        <Stack display="flex" justifyContent="center" flexDirection="row" gap="8px" pt={20} align={"center"}>
-         {
-          itemProduct.images.map((img,index)=>(
-         <Box
-         onClick={()=>handelHoverImg(index)}
-         width="50px" height="50px" border="1px" borderColor="gray.200">
-            <div
-              style={{
-                backgroundImage: `url(http://localhost:3001/files/${img})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: " contain, cover",
-                backgroundPosition: "bottom",
-                width: "100%",
-                height: "100%",
-                transform:
-                  hoverImgProduct === 0 ? "rotate(-40deg)" : "rotate(0deg)",
-              }}
-            ></div>
-          </Box>
-          ))
-         } 
+        <Stack
+          display="flex"
+          justifyContent="center"
+          flexDirection="row"
+          gap="8px"
+          pt={20}
+          align={"center"}
+        >
+          {itemProduct.images.map((img, index) => (
+            <Box
+              onClick={() => handelHoverImg(index)}
+              width="50px"
+              height="50px"
+              border="1px"
+              borderColor="gray.200"
+            >
+              <div
+                style={{
+                  backgroundImage: `url(http://localhost:3001/files/${img})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: " contain, cover",
+                  backgroundPosition: "bottom",
+                  width: "100%",
+                  height: "100%",
+                  transform:
+                    hoverImgProduct === 0 ? "rotate(-40deg)" : "rotate(0deg)",
+                }}
+              ></div>
+            </Box>
+          ))}
         </Stack>
       )}
     </Box>

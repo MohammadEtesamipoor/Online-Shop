@@ -1,5 +1,6 @@
 import styles from "Assets/Styles/Components/Header/index.module.scss";
 // import { Button } from "Components/Button/Button";
+import { useSelector } from "react-redux";
 import {
   Button,
   ButtonGroup,
@@ -26,6 +27,7 @@ import { FaShoppingBag, FaSearch, FaUserCircle } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 const Header = () => {
+  const cartListID = useSelector((state) => state.cartListID);
   return (
     <Flex
       alignItems="center"
@@ -84,10 +86,10 @@ const Header = () => {
               <Avatar
                 boxSize="2.25em"
                 color="gray.100"
-                icon={<FaShoppingBag  fontSize="1.5rem" />}
+                icon={<FaShoppingBag fontSize="1.5rem" />}
               >
                 <AvatarBadge color="gray.700" boxSize="1.5em" bg="gray.100">
-                  54
+                  {cartListID.length !== 0 && cartListID.length}
                 </AvatarBadge>
               </Avatar>
             </AvatarGroup>
