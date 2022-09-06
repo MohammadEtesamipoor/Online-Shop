@@ -99,7 +99,7 @@ export const TableAdminPage = (props) => {
                 <Td>
                   {props.listCategory.map((itemCategory) =>
                     itemCategory["id"] == item["category-id"]
-                      ? itemCategory["name-en"]
+                      ? itemCategory["name-fa"]
                       : null
                   )}
                 </Td>

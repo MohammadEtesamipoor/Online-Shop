@@ -9,3 +9,11 @@ export async function GetOrders() {
         return Promise.reject(e);
     }
 }
+export async function PostOrders(data,config) {
+    try {
+        const response = await HttpService.post(`${GET_ORDERS}/${config}`,data);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}

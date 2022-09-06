@@ -143,7 +143,7 @@ export function ProductCard({ itemProduct, itemCategory }) {
       {hoverImgProduct === 0 ? (
         <Stack pt={10} align={"center"}>
           <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
-            {itemCategory["name-en"]}
+            {itemCategory["name-fa"]}
           </Text>
           <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
             {itemProduct["product-name-fa"]}

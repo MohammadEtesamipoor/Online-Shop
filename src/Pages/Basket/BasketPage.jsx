@@ -1,8 +1,13 @@
 import { FaRegTrashAlt } from "react-icons/fa";
-import DatePicker from "react-multi-date-picker"
+import DatePicker from "react-multi-date-picker";
 import { Calendar } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
+import { CartValidtion } from "Validations/CartValidtion";
+import opacity from "react-element-popper/animations/opacity"
 import persian_fa from "react-date-object/locales/persian_fa";
+import { PostOrders } from "apis/ApiOrders";
+import DateObject from "react-date-object";
+import { Formik, Form, ErrorMessage } from "formik";
 import {
   Box,
   Heading,
@@ -28,7 +33,8 @@ import {
   ModalFooter,
   useToast,
   Alert,
-AlertIcon,
+  AlertIcon,
+  Textarea,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,10 +43,10 @@ import { GetProduct } from "apis/ApiProduct";
 import { useEffect, useRef, useState } from "react";
 import { GET_PRODUCTS } from "Configs/url";
 import { ADD_CART, DECREMENT_CART, REMOVE_CART } from "store/type/BasketType";
+import { FieldDate, FieldInput } from "Components/Input/Input";
 export function BasketPage() {
   const toast = useToast();
   const navigate = useNavigate();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState(new Date());
   const initialRef = useRef(null);
@@ -48,7 +54,9 @@ export function BasketPage() {
   const listCart = useSelector((state) => state.cartListID);
   const dispatch = useDispatch();
   const [dataCart, setDataCart] = useState();
+  const [dateState, setDateState] = useState();
   const [totalCart, setTotalCart] = useState(0);
+  const [date, setDate] = useState(new DateObject({ calendar: persian }).set("date"))
   const formatter = new Intl.NumberFormat("fa-IR", {
     currency: "IRR",
   });
@@ -91,6 +99,43 @@ export function BasketPage() {
         });
       });
   }, [dataCart, listCart]);
+
+  const handelSubmitCart = (infoUser, formik) => {
+    let dataOrderUser = {
+      ...infoUser,
+      orderProduct: [...listCart],
+      totalPrice: totalCart,
+      status:"pending",
+    };
+    PostOrders(dataOrderUser).then((res) => {
+      onClose();
+      toast({
+        status: "success",
+        duration: 3000,
+        position: "bottom",
+        isClosable: true,
+        render: () => (
+          <Box>
+            <Alert
+              display="flex"
+              justifyContent="flex-end"
+              status="success"
+              variant="solid"
+            >
+              سفارش ثبت شد
+              <AlertIcon ml="8px" />
+            </Alert>
+          </Box>
+        ),
+      });
+      dispatch({
+        type: "DEF",
+      });
+      setDataCart();
+      navigate("/home");
+    });
+  };
+
   return (
     <Box mx="32px" my="32px" display="flex" gap="200px">
       {/* list Cart */}
@@ -253,68 +298,108 @@ export function BasketPage() {
           finalFocusRef={finalRef}
           isOpen={isOpen}
           onClose={onClose}
+          closeOnOverlayClick={false}
         >
           <ModalOverlay />
           <ModalContent dir="rtl">
             <ModalHeader>مشخصات</ModalHeader>
             <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel>نام</FormLabel>
-                <Input ref={initialRef} placeholder="نام" />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>نام خانودادگی</FormLabel>
-                <Input placeholder="نام خانودادگی" />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>تلفن همراه</FormLabel>
-                <Input type="Number" placeholder="تلفن همراه" />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel>تاریخ تحویلی</FormLabel>
-                <div style={{ direction: "rtl" }}>
-                  <DatePicker
-                    calendar={persian}
-                    locale={persian_fa}
-                    calendarPosition="bottom-right"
-                  />
-                </div>
-              </FormControl>
-            </ModalBody>
-
-            <ModalFooter>
-              <Button onClick={()=>{
-                onClose()
-                toast({
-                    status: "success",
-                    duration: 3000,
-                    position: "bottom",
-                    isClosable: true,
-                    render: () => (
-                      <Box>
-                        <Alert display="flex" justifyContent="flex-end" status="success" variant='solid'>
-                          سفارش ثبت شد
-                          <AlertIcon ml="8px"/>
-                        </Alert>
+              <Formik
+                initialValues={{
+                  name: "",
+                  family: "",
+                  email: "",
+                  phoneNumber: "",
+                  date: "",
+                  address: "",
+                }}
+                validationSchema={CartValidtion}
+              >
+                {(formik) => (
+                  <Box>
+                    <Form>
+                      <FieldInput
+                        name="name"
+                        placeholder={"نام"}
+                        type={"text"}
+                      />
+                      <FieldInput
+                        name="family"
+                        placeholder={"نام خانودادگی"}
+                        type={"text"}
+                      />
+                      <FieldInput
+                        name="email"
+                        placeholder={"ایمیل"}
+                        type={"email"}
+                      />
+                      <FieldInput
+                        name="phoneNumber"
+                        placeholder={"شماره موبایل"}
+                        type={"number"}
+                      />
+                      {/* <FieldInput
+                        name="date"
+                        placeholder={"تاریخ"}
+                        value={dateState}
+                      /> */}
+                      <FormControl mt="20px" >
+                      <lable style={{marginLeft:"15px"}} >
+                تاریخ تحویل:  
+                        </lable>
+                      <FieldDate
+                           value={date}
+                          //  onChange={setDate}
+                           animations={[
+                            opacity({ from: 0.1, to: 1, duration: 1000 })
+                          ]} 
+                          minDate={new DateObject({ calendar: persian }).set("day", date.day+4)}
+                          maxDate={new DateObject({ calendar: persian }).set("day", date.day + 8)}
+                      
+                        calendar={persian}
+                        locale={persian_fa}
+                        calendarPosition="bottom-right"
+                      />
+                
+                      </FormControl >
+                      <FieldInput
+                        isTextarea={true}
+                        name="address"
+                        placeholder={"آدرس"}
+                        mt="15px"
+                      />
+                      <Box mt="20px">
+                        <Button
+                          onClick={() => {
+                            Object.keys(formik.errors).length === 0 &&
+                              handelSubmitCart(formik.values, formik);
+                          }}
+                          colorScheme="blue"
+                          mr={3}
+                          type="submit"
+                        >
+                          پرداخت
+                        </Button>
+                        <Button mr="10px" onClick={onClose}>
+                          انصراف
+                        </Button>
                       </Box>
-                    ),
-                  });
-                  dispatch({
-                    type: "DEF",
-                  })
-              setDataCart()
-              navigate("/home");
-              }} colorScheme="blue" mr={3}>
-                پرداخت
-              </Button>
-              <Button onClick={onClose}>انصراف</Button>
-            </ModalFooter>
+                    </Form>
+                  </Box>
+                )}
+              </Formik>
+            </ModalBody>
           </ModalContent>
         </Modal>
       </Box>
     </Box>
   );
 }
+
+// <div style={{ direction: "rtl" }}>
+//   <DatePicker
+//     calendar={persian}
+//     locale={persian_fa}
+//     calendarPosition="bottom-right"
+//   />
+// </div>
