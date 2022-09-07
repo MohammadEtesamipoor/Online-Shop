@@ -28,7 +28,7 @@ import {
   FormLabel,
   ModalFooter,
 } from "@chakra-ui/react";
-import { PostOrders } from "apis/ApiOrders";
+import { PutOrders } from "apis/ApiOrders";
 import { useEffect, useState } from "react";
 import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
@@ -72,7 +72,7 @@ export const TableOrdersPage = (props) => {
           <TableCaption>
             <Tabs variant="enclosed" display="flex" justifyContent="center">
               <TabList>
-                {paginationNumbers.map((itme,index) => (
+                {paginationNumbers.map((itme, index) => (
                   <Tab key={index} onClick={() => handelPagination(itme + 1)}>
                     {itme + 1}
                   </Tab>
@@ -110,14 +110,6 @@ export const TableOrdersPage = (props) => {
                 )
             )}
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>نام کاربر</Th>
-              <Th>مجموع مبلغ</Th>
-              <Th>زمان ثبت سفارش</Th>
-              <Th>وضعیت</Th>
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
     </>
@@ -133,8 +125,8 @@ const ManualClose = ({ item = [], allProduct = [] }) => {
   const toast = useToast();
   const handelStatusOrders = () => {
     item.status = "posted";
-    item.date = new DateObject().set("date").unix
-    PostOrders(item,item.id).then((res) => {
+    item.date = new DateObject().set("date").unix;
+    PutOrders(item, item.id).then((res) => {
       toast({
         status: "success",
         duration: 3000,
@@ -148,7 +140,7 @@ const ManualClose = ({ item = [], allProduct = [] }) => {
               status="success"
               variant="solid"
             >
-             سفارش تحویل داد شد
+              سفارش تحویل داد شد
               <AlertIcon ml="8px" />
             </Alert>
           </Box>
@@ -172,7 +164,12 @@ const ManualClose = ({ item = [], allProduct = [] }) => {
     <>
       <Button onClick={handeOrderDetails}>بررسی سفارش</Button>
 
-      <Modal size={'xl'} closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        size={"xl"}
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalOverlay />
         <ModalContent dir="rtl">
           <ModalHeader as="b">اطلاعات سفارشات کاربر</ModalHeader>
@@ -185,6 +182,11 @@ const ManualClose = ({ item = [], allProduct = [] }) => {
             <FormLabel>تلفن: {item.phoneNumber}</FormLabel>
             <FormLabel>زمان تحویل: {handelDateOrder(item.date)}</FormLabel>
             <FormLabel>زمان سفارش: {handelDateOrder(item.createdAt)}</FormLabel>
+            <FormLabel>
+              مبلغ پرداخت شده:
+              {formatter.format(item["totalPrice"])}{" "}
+              <span style={{ fontSize: "8px" }}>ريال</span>
+            </FormLabel>
             <TableContainer>
               <ModalHeader>سفارشات کاربر</ModalHeader>
               <Table variant="simple">
@@ -196,51 +198,55 @@ const ManualClose = ({ item = [], allProduct = [] }) => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {dataProduct&&
-                   item.orderProduct.map((itemOrder,index) => (
-                     // if(itemOrder.productId===itemProduct.id) return itemOrder.sizeShoes+","
-                     <Tr key={index}>
+                  {dataProduct &&
+                    item.orderProduct.map((itemOrder, index) => (
+                      // if(itemOrder.productId===itemProduct.id) return itemOrder.sizeShoes+","
+                      <Tr key={index}>
                         <Td>
-                        {
-                              dataProduct.map(itemProduct=>(
-                                itemOrder.productId===itemProduct.id&&
-                                    `${itemProduct['product-name-fa']} (سایز ${itemOrder['sizeShoes']})`
-                              ))
-                        }
+                          {dataProduct.map(
+                            (itemProduct) =>
+                              itemOrder.productId === itemProduct.id &&
+                              `${itemProduct["product-name-fa"]} (سایز ${itemOrder["sizeShoes"]})`
+                          )}
                         </Td>
                         <Td>
-                        {formatter.format(item["totalPrice"])}{" "}
-                      <span style={{ fontSize: "8px" }}>ريال</span>
-                    </Td>
-                        <Td>{itemOrder['quantity']}</Td>
+                          {dataProduct.map(
+                            (itemProduct) =>
+                              itemOrder.productId === itemProduct.id &&
+                              formatter.format(`${itemProduct["price"]}`)
+                          )}
+                          {" "}
+                          <span style={{ fontSize: "8px" ,fontWeight:"bold"}}>ريال</span>
+                        </Td>
+                        <Td>{itemOrder["quantity"]}</Td>
                       </Tr>
-                     ))}
+                    ))}
                 </Tbody>
               </Table>
             </TableContainer>
           </ModalBody>
 
           <ModalFooter>
-          {
-              item.status==="pending"?
+            {item.status === "pending" ? (
               <Box>
-              <Button
-                onClick={() => handelStatusOrders()}
-                mx="15px"
-                colorScheme="blue"
-                mr={3}
-              >
-                تحویل شد
-              </Button>
-              <Button onClick={onClose}>انصراف</Button>
-              </Box>:
+                <Button
+                  onClick={() => handelStatusOrders()}
+                  mx="15px"
+                  colorScheme="blue"
+                  mr={3}
+                >
+                  تحویل شد
+                </Button>
+                <Button onClick={onClose}>انصراف</Button>
+              </Box>
+            ) : (
               <>
-              <Heading   mx="15px" size={"md"}>
-                زمان تحویل: {handelDateOrder(item.date)}
-              </Heading>
-              <Button onClick={onClose}>خروج</Button>
+                <Heading mx="15px" size={"md"}>
+                  زمان تحویل: {handelDateOrder(item.date)}
+                </Heading>
+                <Button onClick={onClose}>خروج</Button>
               </>
-            }
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

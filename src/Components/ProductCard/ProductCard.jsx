@@ -26,7 +26,9 @@ import {
 import { useState } from "react";
 export function ProductCard({ itemProduct, itemCategory }) {
   const dispatch = useDispatch();
-
+  const formatter = new Intl.NumberFormat("fa-IR", {
+    currency: "IRR",
+  });
   const [hoverImgProduct, setHoverImgProduct] = useState(0);
   const handelMouseOver = () => {
     hoverImgProduct === 0 && setHoverImgProduct(1);
@@ -106,7 +108,7 @@ export function ProductCard({ itemProduct, itemCategory }) {
                     borderColor="#96969652"
                     filter="blur(0.4px)"
                   >
-                    اضافه کردن به سبد خرید
+                    افزودن به سبد خرید
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent borderColor="gray.100">
@@ -158,11 +160,13 @@ export function ProductCard({ itemProduct, itemCategory }) {
             >
               <FaShoppingCart fontSize="50px" />
             </Box>
-            <Text fontWeight={800} fontSize={"xl"}>
-              {itemProduct["price"]}
+            <Text as={'b'} color={"gray.800"}>
+              {formatter.format(itemProduct["price"])}{" "}
+                      <span style={{ fontSize: "8px" }}>ريال</span>
             </Text>
             <Text textDecoration={"line-through"} color={"gray.600"}>
-              {itemProduct["price"] * 1.2}
+            {formatter.format(itemProduct["price"] * 1.1)}{" "}
+            <span style={{ fontSize: "8px" }}>ريال</span>
             </Text>
           </Stack>
         </Stack>
