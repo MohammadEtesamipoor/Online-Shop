@@ -9,9 +9,9 @@ export async function GetOrders() {
         return Promise.reject(e);
     }
 }
-export async function PostOrders(data,config) {
+export async function PostOrders(data,id) {
     try {
-        const response = await HttpService.post(`${GET_ORDERS}/${config}`,data);
+        const response = await HttpService.put(`${GET_ORDERS}/${id}`,data);
         return response;
     } catch (e) {
         return Promise.reject(e);

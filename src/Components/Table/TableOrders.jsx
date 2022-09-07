@@ -15,14 +15,14 @@ import {
   Tabs,
   TabList,
   Tab,
-  toast,
+  useToast,
   useDisclosure,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   Alert,
-AlertIcon,
+  AlertIcon,
   ModalCloseButton,
   ModalBody,
   FormLabel,
@@ -32,15 +32,25 @@ import { PostOrders } from "apis/ApiOrders";
 import { useEffect, useState } from "react";
 import DateObject from "react-date-object";
 import persian from "react-date-object/calendars/persian";
+import { useDispatch, useSelector } from "react-redux";
 
 import { FaEdit, FaRegEdit, FaUserClock } from "react-icons/fa";
-
+import { GET_DATA } from "store/type/BasketType";
+import { GET_PRODUCTS } from "Configs/url";
+import { GetProducts } from "apis/ApiProduct";
 export const TableOrdersPage = (props) => {
+  const [dataProducts, setDataProduct] = useState();
   const [pagination, setPagination] = useState(10);
   const [statusOrdersData, setStatusOrdersData] = useState("posted");
+  const dispatch = useDispatch();
   const formatter = new Intl.NumberFormat("fa-IR", {
     currency: "IRR",
   });
+  useEffect(() => {
+    GetProducts().then((res) => {
+      setDataProduct(res.data);
+    });
+  }, []);
   useEffect(() => {
     props.statusOrders === 0
       ? setStatusOrdersData("posted")
@@ -54,17 +64,16 @@ export const TableOrdersPage = (props) => {
     setPagination(item * 10);
   };
 
-
-
   return (
     <>
       <TableContainer maxWidth="100%" whiteSpace="normal">
+        {/* <>{dataProducts&& dataProducts[0]["price"]}</> */}
         <Table variant="striped">
           <TableCaption>
             <Tabs variant="enclosed" display="flex" justifyContent="center">
               <TabList>
-                {paginationNumbers.map((itme) => (
-                  <Tab onClick={() => handelPagination(itme + 1)}>
+                {paginationNumbers.map((itme,index) => (
+                  <Tab key={index} onClick={() => handelPagination(itme + 1)}>
                     {itme + 1}
                   </Tab>
                 ))}
@@ -73,7 +82,7 @@ export const TableOrdersPage = (props) => {
           </TableCaption>
           <Thead>
             <Tr>
-              <Th>نام کاربر</Th>
+              <Th>نامم کاربر</Th>
               <Th>مجموع مبلغ</Th>
               <Th>زمان ثبت سفارش</Th>
               <Th>وضعیت</Th>
@@ -94,7 +103,7 @@ export const TableOrdersPage = (props) => {
                     <Td>{handelDateOrder(item["date"])}</Td>
                     <Td>
                       <Box display="flex" gap={6}>
-                          <ManualClose item={item} />
+                        <ManualClose item={item} allProduct={dataProducts} />
                       </Box>
                     </Td>
                   </Tr>
@@ -115,13 +124,17 @@ export const TableOrdersPage = (props) => {
   );
 };
 
-const ManualClose = ({item}) => {
+const ManualClose = ({ item = [], allProduct = [] }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handelStatusOrders=()=>{
-    item.status="posted"
-    console.log(item);
-    PostOrders(item,item.id).then((res=>{
+  const [dataProduct, setDataProduct] = useState();
+  const formatter = new Intl.NumberFormat("fa-IR", {
+    currency: "IRR",
+  });
+  const toast = useToast();
+  const handelStatusOrders = () => {
+    item.status = "posted";
+    item.date = new DateObject().set("date").unix
+    PostOrders(item,item.id).then((res) => {
       toast({
         status: "success",
         duration: 3000,
@@ -135,31 +148,40 @@ const ManualClose = ({item}) => {
               status="success"
               variant="solid"
             >
-              وضعیت سفارش تغییر کرد
+             سفارش تحویل داد شد
               <AlertIcon ml="8px" />
             </Alert>
           </Box>
         ),
       });
-      onClose()
-    }))
-  }
+      onClose();
+    });
+  };
+  const handeOrderDetails = () => {
+    let newData = [];
+    allProduct?.map((itemProduct) => {
+      item["orderProduct"].map((itemCart) => {
+        if (itemProduct.id == itemCart.productId) newData.push(itemProduct);
+      });
+    });
+    newData = [...new Set(newData)];
+    setDataProduct(newData);
+    onOpen();
+  };
   return (
     <>
-      <Button onClick={onOpen}>بررسی سفارش</Button>
+      <Button onClick={handeOrderDetails}>بررسی سفارش</Button>
 
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-
-      >
+      <Modal size={'xl'} closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent dir="rtl" >
+        <ModalContent dir="rtl">
           <ModalHeader as="b">اطلاعات سفارشات کاربر</ModalHeader>
           <ModalBody mx="20px" pb={6}>
-            <FormLabel>نام مشتری: {item.name} {item.family}</FormLabel>
+            <FormLabel>
+              نام مشتری: {item.name} {item.family}
+            </FormLabel>
             <FormLabel>آدرس: {item.address}</FormLabel>
+            {/* <FormLabel>آدرس: {dataProduct[0]?.id}</FormLabel> */}
             <FormLabel>تلفن: {item.phoneNumber}</FormLabel>
             <FormLabel>زمان تحویل: {handelDateOrder(item.date)}</FormLabel>
             <FormLabel>زمان سفارش: {handelDateOrder(item.createdAt)}</FormLabel>
@@ -174,23 +196,51 @@ const ManualClose = ({item}) => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>inches</Td>
-                    <Td>millimetres (mm)</Td>
-                    <Td>25.4</Td>
-                  </Tr>
+                  {dataProduct&&
+                   item.orderProduct.map((itemOrder,index) => (
+                     // if(itemOrder.productId===itemProduct.id) return itemOrder.sizeShoes+","
+                     <Tr key={index}>
+                        <Td>
+                        {
+                              dataProduct.map(itemProduct=>(
+                                itemOrder.productId===itemProduct.id&&
+                                    `${itemProduct['product-name-fa']} (سایز ${itemOrder['sizeShoes']})`
+                              ))
+                        }
+                        </Td>
+                        <Td>
+                        {formatter.format(item["totalPrice"])}{" "}
+                      <span style={{ fontSize: "8px" }}>ريال</span>
+                    </Td>
+                        <Td>{itemOrder['quantity']}</Td>
+                      </Tr>
+                     ))}
                 </Tbody>
               </Table>
             </TableContainer>
           </ModalBody>
 
           <ModalFooter>
-            <Button
-            onClick={()=>handelStatusOrders()}
-            mx="15px" colorScheme="blue" mr={3}>
-              تحویل شد
-            </Button>
-            <Button onClick={onClose}>انصراف</Button>
+          {
+              item.status==="pending"?
+              <Box>
+              <Button
+                onClick={() => handelStatusOrders()}
+                mx="15px"
+                colorScheme="blue"
+                mr={3}
+              >
+                تحویل شد
+              </Button>
+              <Button onClick={onClose}>انصراف</Button>
+              </Box>:
+              <>
+              <Heading   mx="15px" size={"md"}>
+                زمان تحویل: {handelDateOrder(item.date)}
+              </Heading>
+              <Button onClick={onClose}>خروج</Button>
+              </>
+            }
           </ModalFooter>
         </ModalContent>
       </Modal>
