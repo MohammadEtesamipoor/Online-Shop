@@ -23,6 +23,7 @@ import Layout from "Layouts/Layout";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import AuthProvider from "Context/AuthContext";
+import Page404 from "Pages/404/Page404";
 
 export const Routing = () => {
   return (
@@ -30,10 +31,10 @@ export const Routing = () => {
       <AuthProvider>
         <Routes>
           {/* public routes  */}
-          <Route path="*" element={<Layout main={<HomePage />} />} />
+          <Route path="*" element={<Layout main={<Page404 />} />} />
           <Route element={<PublicRoute />}>
             <Route path={PAGE.Main} element={<Layout main={<HomePage />} />} />
-            <Route element={<Layout main={<HomePage />} />} />
+            <Route element={<Layout main={<Page404 />} />} />
             <Route path={PAGE.Home} element={<Navigate replace to="/" />} />
 
             <Route

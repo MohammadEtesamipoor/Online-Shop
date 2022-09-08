@@ -8,10 +8,12 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { PostOrders } from "apis/ApiOrders";
 import DateObject from "react-date-object";
 import { Formik, Form, ErrorMessage } from "formik";
+import backetEmp from 'Assets/Images/backet.jpg'
 import {
   Box,
   Heading,
   Button,
+  Image,
   Text,
   Divider,
   NumberInput,
@@ -137,6 +139,9 @@ export function BasketPage() {
   };
 
   return (
+    <>
+    {
+      listCart.length >= 1?
     <Box mx="32px" my="32px" display="flex" gap="200px">
       {/* list Cart */}
       <Box flex="0.7">
@@ -392,7 +397,13 @@ export function BasketPage() {
           </ModalContent>
         </Modal>
       </Box>
-    </Box>
+    </Box>:
+      <Box justifyContent="center" mx="32px" my="32px" display="flex" gap="200px">
+        <Image w="40%" h="40%" src={backetEmp} />
+      </Box>
+        
+    }
+    </>
   );
 }
 

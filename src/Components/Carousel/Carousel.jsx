@@ -49,28 +49,37 @@ export default function MyCarousel() {
     <>
       <Swiper
         dir="rtl"
-        slidesPerView={2}
-        initialSlide={1}
-        centeredSlides={true}
-        parallax={true}
-        spaceBetween={20}
-        scrollbar={{
-          hide: true,
-        }}
+        spaceBetween={30}
+        effect={"fade"}
+        navigation={true}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
         }}
-
-        modules={[Autoplay, Pagination, Navigation, Scrollbar,EffectFade]}
+        modules={[Autoplay,EffectFade,Scrollbar, Navigation, Pagination]}
         className="mySwiper"
+        // slidesPerView={2}
+        // initialSlide={1}
+        // centeredSlides={true}
+        // parallax={true}
+        // spaceBetween={20}
+        scrollbar={{
+          hide: true,
+        }}
+        // autoplay={{
+        //   delay: 3000,
+        //   disableOnInteraction: false,
+        // }}
+
+        // modules={[Autoplay, Pagination, Navigation, Scrollbar,EffectFade]}
+        // className="mySwiper"
       >
-                <SwiperSlide>
+    <SwiperSlide >
           <div>
             <Box
               padding="50px"
-              borderRadius="15px"
-              bg="#9e8992be"
+              // borderRadius="15px"
+              bg="#9e8992"
               width="100%"
               height="100%"
             >
@@ -106,7 +115,7 @@ export default function MyCarousel() {
                 top="20px"
                 left="0"
                 // transform="rotate(-30deg)"
-                width="50%"
+                width="40%"
                 position="absolute"
                 objectFit="contain"
                 src={slideBag}
@@ -120,8 +129,7 @@ export default function MyCarousel() {
           <div>
             <Box
               padding="50px"
-              borderRadius="15px"
-              bg="#7C8C87be"
+              bg="#7c8c87"
               width="100%"
               height="100%"
             >
@@ -158,7 +166,7 @@ export default function MyCarousel() {
                 left="0"
                 transform="rotate(-30deg)"
                 // width="50%"
-                width="60%"
+                width="40%"
                 position="absolute"
                 objectFit="contain"
                 src={img3}
@@ -172,8 +180,7 @@ export default function MyCarousel() {
           <div>
             <Box
               padding="50px"
-              borderRadius="15px"
-              bg="#cec5c5c8"
+              bg="#cfabab"
               width="100%"
               height="100%"
             >
@@ -210,7 +217,7 @@ export default function MyCarousel() {
                 left="0"
                 transform="rotate(-30deg)"
                 // width="50%"
-                width="60%"
+                width="40%"
                 position="absolute"
                 objectFit="contain"
                 src={women}
@@ -225,8 +232,8 @@ export default function MyCarousel() {
           slot="container-start">
             <Box
               padding="50px"
-              borderRadius="15px"
-              bg="#313238be"
+              // borderRadius="15px"
+              bg="#313238"
               width="100%"
               height="100%"
             >
@@ -262,7 +269,7 @@ export default function MyCarousel() {
                 top="60px"
                 left="-10px"
                 transform="rotate(-30deg)"
-                width="60%"
+                width="40%"
                 position="absolute"
                 objectFit="contain"
                 src={slideMen}
@@ -276,8 +283,8 @@ export default function MyCarousel() {
           <div>
             <Box
               padding="50px"
-              borderRadius="15px"
-              bg="#18264Fbe"
+              // borderRadius="15px"
+              bg="#18264f"
               width="100%"
               height="100%"
             >
@@ -313,7 +320,7 @@ export default function MyCarousel() {
                 top="0"
                 left="0"
                 transform="rotate(-30deg)"
-                width="60%"
+                width="40%"
                 position="absolute"
                 objectFit="contain"
                 src={imgg}

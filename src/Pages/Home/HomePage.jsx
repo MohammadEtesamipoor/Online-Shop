@@ -32,7 +32,7 @@ export function HomePage() {
   }, []);
   return (
     
-    <Box mx="0px" my="32px">
+    <Box mx="0px" my="0px">
      <MyCarousel />
     <Box mx="32px" my="32px">
       {productData ? (
@@ -48,10 +48,12 @@ export function HomePage() {
               {/* Box list product card */}
               <Box
                 display="flex"
-                flexWrap="wrap"
+                // flexWrap="wrap"
                 gap="40px"
                 my="20px"
                 mx="30px"
+                overflowX="scroll"
+                scrollbarWidth= "thin"
               >
                 {/*Box card product */}
                 {productData.map(

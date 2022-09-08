@@ -92,7 +92,7 @@ export function ProductCard({ itemProduct, itemCategory }) {
                 width: "282px",
                 height: "230px",
                 transform:
-                  hoverImgProduct === 0 ? "rotate(-40deg)" : "rotate(0deg)",
+                  hoverImgProduct === 0 ? "rotate(0deg)" : "rotate(0deg)",
               }}
             ></div>
           </Link>
