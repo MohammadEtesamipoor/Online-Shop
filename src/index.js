@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider theme={theme}>
     <Provider store={store}>
-      <App />
+      <App    />
     </Provider>
   </ChakraProvider>
 );

@@ -28,42 +28,7 @@ export function ProductsPage() {
     console.log(productData);
   }, []);
   return (
-    <Box mx="32px" my="40px" display="flex">
-      <Box width="20%" display="flex" flexDirection="column" gap="20px">
-        {categoryData
-          ? categoryData.map((itemCategory) => (
-              <Box>
-                <Link to={`${PAGE.Products}/${itemCategory.id}`}>
-                  <Heading color="#0a0a0ab8" as="h4" size="md" mb="20px">
-                    {itemCategory["name-fa"]}
-                  </Heading>
-                </Link>
-
-                {productData ? (
-                  <Box
-                    mx="15px"
-                    display="flex"
-                    flexDirection="column"
-                    gap="10px"
-                  >
-                    {productData.map(
-                      (itemProduct) =>
-                        itemProduct["category-id"] == itemCategory["id"] && (
-                            <Link replace  to={`/product/${itemProduct.id}`} >
-                          <Heading color="#383442b8" as="h6" size="xs">
-                            {itemProduct["product-name-fa"]}
-                          </Heading>
-                          </Link>
-                        )
-                    )}
-                  </Box>
-                ) : (
-                  "loading"
-                )}
-              </Box>
-            ))
-          : "Loadingg"}
-      </Box>
+    <Box mx="32px" my="60px" display="flex">
       <Box width="80%" >
         {productData ? (
           <Box display="flex" flexDirection="column" gap="40px">

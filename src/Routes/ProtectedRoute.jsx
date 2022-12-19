@@ -3,6 +3,8 @@ import {PAGE} from 'Configs/route'
 import { useEffect } from 'react';
 import { CheckExp } from 'utils/CheckExp';
 import {useToast} from '@chakra-ui/react'
+import Layout from 'Layouts/Layout';
+import Page404 from 'Pages/404/Page404';
 export function ProtectedRoute() {
     const isLogin=localStorage.getItem("ACCESS_TOKEN")
     const location = useLocation();
@@ -11,16 +13,8 @@ export function ProtectedRoute() {
     },[location]);
     const toast = useToast();
     
-    !isLogin&&toast({
-      containerStyle: {
-        display: "flex",
-        flexDirection: "row-reverse",
-      },
-      description: " اشتباه است",
-      status: "error",
-      duration: 1000,
-    });
+    // !isLogin&& <Navigate to={<Layout main={<Page404 />} />} />
     return (    
-        isLogin?  <Outlet /> : <Navigate to={PAGE.Main}  />
+        isLogin?  <Outlet /> : <Navigate to={PAGE.N404}  />
      )
 }

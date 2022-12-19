@@ -73,11 +73,12 @@ export function AdminProductPage() {
           listCategory={CategoryProductData}
         />
       ) : (
-        <Stack mt="40px">
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-        </Stack>
+        <Stack mt="40px" mx="20px">
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+      </Stack>
       )}
     </Box>
   );

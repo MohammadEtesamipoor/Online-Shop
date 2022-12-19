@@ -31,7 +31,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { FaShoppingBag, FaChevronLeft, FaUserCircle } from "react-icons/fa";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -42,9 +42,51 @@ import "swiper/css/pagination";
 import "./Car.css";
 
 // import required modules
-import { Pagination, Autoplay, Navigation, Scrollbar,EffectFade } from "swiper";
+import {
+  Pagination,
+  Autoplay,
+  Navigation,
+  Scrollbar,
+  EffectFade,
+} from "swiper";
+import ColorHeaderContext from "Context/headerColor";
 
 export default function MyCarousel() {
+  const [swiper, setSwiper] = useState(null);
+  const { color,setColor } = React.useContext(ColorHeaderContext);
+  const bgColorSilde = [
+    "#bebebe",
+    // "#7c8c87",
+    // "#cfabab",
+    "#313238",
+  ];
+
+
+  // useEffect(() => {
+  //   const handleScroll = event => {
+  //     if(window.scrollY>=600){
+  //       setColor({
+  //         theme:"other",
+  //         clr:"#313238",
+  //         // clr:"#313238",
+  //         bgClr:'#ffffff'
+  //         // bgClr:"#9394a5"
+  //       })
+  //     }
+  //     else{
+  //       setColor({
+  //         theme:color.theme,
+  //         clr:color.clr,
+  //         // clr:"#313238",
+  //         bgClr:color.bgClr
+  //         // bgClr:"#9394a5"
+  //       })
+  //     }
+  //   };
+  //   window.addEventListener('scroll', handleScroll);
+
+  // }, []);
+
   return (
     <>
       <Swiper
@@ -52,12 +94,13 @@ export default function MyCarousel() {
         spaceBetween={30}
         effect={"fade"}
         navigation={true}
+        pagination={true}
         autoplay={{
-          delay: 3000,
+          delay: 100,
           disableOnInteraction: false,
         }}
-        modules={[Autoplay,EffectFade,Scrollbar, Navigation, Pagination]}
-        className="mySwiper"
+        modules={[Autoplay, EffectFade, Scrollbar, Navigation, Pagination]}
+        //className="mySwiper"
         // slidesPerView={2}
         // initialSlide={1}
         // centeredSlides={true}
@@ -74,26 +117,26 @@ export default function MyCarousel() {
         // modules={[Autoplay, Pagination, Navigation, Scrollbar,EffectFade]}
         // className="mySwiper"
       >
-    <SwiperSlide >
+        <SwiperSlide>
           <div>
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg="#9e8992"
+              bg={color.bgClr}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="xl" color="#F3F3F3">
-                    کیف و کوله پوشتی
+                  <Heading as="b" size="xl" color={color.clr}>
+                  کیف و کوله پوشتی  
                   </Heading>
                   <Heading
                     marginY="15px"
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color="#F3F3F3"
+                    color={color.clr}
                   >
                     جدید ترین کیف ها
                   </Heading>
@@ -102,12 +145,13 @@ export default function MyCarousel() {
                   <Button
                     rightIcon={<FaChevronLeft size={20} />}
                     borderColor="#f3f3f36c"
-                    color="#F3F3F3"
+                    color="#3a3a3a"
+                    backgroundColor="#F3F3F3"
                     variant="outline"
                     paddingX="60px"
                     transform="translate(-50px, -80px)"
                   >
-                   کیف و کوله پوشتی
+                    کیف و کوله پوشتی
                   </Button>
                 </Box>
               </Box>
@@ -124,26 +168,21 @@ export default function MyCarousel() {
             </Box>
           </div>
         </SwiperSlide>
-        <SwiperSlide
-        >
+        <SwiperSlide>
           <div>
-            <Box
-              padding="50px"
-              bg="#7c8c87"
-              width="100%"
-              height="100%"
-            >
+            <Box padding="50px" bg={color.bgClr} width="100%" height="100%">
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="2xl" color="#F3F3F3">
-                    کفش مردانه
+                            کفش مردانه        <Heading as="b" size="2xl"  color={color.clr}>
+  
                   </Heading>
                   <Heading
+
                     marginY="15px"
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color="#F3F3F3"
+                     color={color.clr}
                   >
                     جدید ترین کفش های مردانه
                   </Heading>
@@ -152,8 +191,9 @@ export default function MyCarousel() {
                   <Button
                     rightIcon={<FaChevronLeft size={20} />}
                     borderColor="#f3f3f36c"
-                    color="#F3F3F3"
+                    color="#3a3a3a"
                     variant="outline"
+                    backgroundColor="#F3F3F3"
                     paddingX="60px"
                     transform="translate(-50px, -80px)"
                   >
@@ -175,26 +215,20 @@ export default function MyCarousel() {
             </Box>
           </div>
         </SwiperSlide>
-        <SwiperSlide
-        >
+        <SwiperSlide>
           <div>
-            <Box
-              padding="50px"
-              bg="#cfabab"
-              width="100%"
-              height="100%"
-            >
+            <Box padding="50px" bg={color.bgClr} width="100%" height="100%">
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="2xl" color="#F3F3F3">
-                    کفش زنانه
+                  <Heading as="b" size="2xl"  color={color.clr}>
+               کفش زنانه     
                   </Heading>
                   <Heading
                     marginY="15px"
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color="#F3F3F3"
+                     color={color.clr}
                   >
                     جدید ترین کفش های زنانه
                   </Heading>
@@ -203,7 +237,8 @@ export default function MyCarousel() {
                   <Button
                     rightIcon={<FaChevronLeft size={20} />}
                     borderColor="#f3f3f36c"
-                    color="#F3F3F3"
+                    color="#3a3a3a"
+                    backgroundColor="#F3F3F3"
                     variant="outline"
                     paddingX="60px"
                     transform="translate(-50px, -80px)"
@@ -227,19 +262,18 @@ export default function MyCarousel() {
           </div>
         </SwiperSlide>
 
-        <SwiperSlide >
-          <div
-          slot="container-start">
+        <SwiperSlide>
+          <div slot="container-start">
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg="#313238"
+              bg={color.bgClr}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="xl" color="#F3F3F3">
+                  <Heading as="b" size="xl"  color={color.clr}>
                     کفش مجلسی مردانه
                   </Heading>
                   <Heading
@@ -247,21 +281,22 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color="#F3F3F3"
+                     color={color.clr}
                   >
-                    جدید ترین کفش های  مجلسی مردانه
+                    جدید ترین کفش های مجلسی مردانه
                   </Heading>
                 </Box>
                 <Box>
                   <Button
                     rightIcon={<FaChevronLeft size={20} />}
                     borderColor="#f3f3f36c"
-                    color="#F3F3F3"
+                    color="#3a3a3a"
+                    backgroundColor="#F3F3F3"
                     variant="outline"
                     paddingX="60px"
                     transform="translate(-50px, -80px)"
                   >
-                    کفش مجلسی مردانه
+                  کفش مجلسی مردانه  
                   </Button>
                 </Box>
               </Box>
@@ -278,27 +313,27 @@ export default function MyCarousel() {
             </Box>
           </div>
         </SwiperSlide>
-    
+
         <SwiperSlide>
           <div>
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg="#18264f"
+              bg={color.bgClr}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="2xl" color="#F3F3F3">
-                  کفش اسپرت 
+                  <Heading as="b" size="2xl"  color={color.clr}>
+                    کفش اسپرت
                   </Heading>
                   <Heading
                     marginY="15px"
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color="#F3F3F3"
+                     color={color.clr}
                   >
                     جدید ترین کفش اسپرت
                   </Heading>
@@ -307,12 +342,13 @@ export default function MyCarousel() {
                   <Button
                     rightIcon={<FaChevronLeft size={20} />}
                     borderColor="#f3f3f36c"
-                    color="#F3F3F3"
+                    color="#3a3a3a"
+                    backgroundColor="#F3F3F3"
                     variant="outline"
                     paddingX="60px"
                     transform="translate(-50px, -80px)"
                   >
-                    کفش اسپرت 
+                    کفش اسپرت
                   </Button>
                 </Box>
               </Box>

@@ -94,19 +94,21 @@ export function LoginPage() {
       justifyContent="center"
       alignItems="center"
       width="100%"
-      height="100%"
+      height="100vh"
       backdropFilter="auto"
       backdropBlur="8px"
       bg="#E5ECF4"
     >
       <Box
         display="flex"
-        width="60%"
-        height="80%"
+        flexDirection={{base:"column",md:'row'}}
+        width="80%"
+        alignItems="center"
+        justifyContent="center"
         bg="#bec6e3c9"
         boxShadow="dark-lg"
         p="6"
-        rounded="2xl"
+        rounded="lg"
       >
         {/* logo image     */}
         <Box
@@ -115,6 +117,9 @@ export function LoginPage() {
           justifyContent="center"
           height="100%"
           width="40%"
+          onClick={()=>{
+            navigate('/home')
+          }}
         >
           <Image src={imgLogo} alt="Logo" />
         </Box>
@@ -123,14 +128,10 @@ export function LoginPage() {
           display="flex"
           alignItems="center"
           justifyContent="center "
-          width="60%"
-          height="100%"
         >
           <Flex
-            height="70%"
             justifyContent="center"
             alignItems="center"
-            boxShadow="inner"
             p="6"
             rounded="md"
           >
@@ -146,13 +147,14 @@ export function LoginPage() {
               {/* Use Name */}
               <Box>
                 <FormControl isInvalid={isError}>
-                  <InputGroup width="300px">
+                  <InputGroup>
                     <Input
-                      _placeholder={{ color: "#a0c9dd" }}
+                      _placeholder={{ color: "#f5f5f5" }}
                       textAlign="right"
                       variant="flushed"
                       placeholder="نام کاربری"
-                      size="lg"
+                      mr="25px"
+                      size={{base:'sm',md:"lg"}}
                       onChange={handleInputChange}
                       ref={userNameRef}
                     />
@@ -164,7 +166,7 @@ export function LoginPage() {
                   {!isError ? (
                     <FormHelperText></FormHelperText>
                   ) : (
-                    <FormErrorMessage dir="rtl" color="#944e4e">
+                    <FormErrorMessage  mr="25px" dir="rtl" color="#944e4e">
                       نام کاربری را وارد کنید
                     </FormErrorMessage>
                   )}
@@ -174,18 +176,19 @@ export function LoginPage() {
               {/* password */}
               <Box>
                 <FormControl isInvalid={isError}>
-                  <InputGroup width="300px">
+                  <InputGroup >
                     <InputRightElement
                       pointerEvents="none"
                       children={<FaLock color="#4e7e95" />}
                     />
                     <Input
-                      _placeholder={{ color: "#a0c9dd" }}
+                      _placeholder={{ color: "#f5f5f5" }}
                       textAlign="right"
+                      mr="25px"
                       type={show ? "text" : "password"}
                       variant="flushed"
                       placeholder="رمز عبور"
-                      size="lg"
+                      size={{base:'sm',md:"lg"}}
                       ref={passwordRef}
                     />
                     <InputLeftElement>
@@ -202,7 +205,7 @@ export function LoginPage() {
                   {!isError ? (
                     <FormHelperText></FormHelperText>
                   ) : (
-                    <FormErrorMessage dir="rtl" color="#944e4e">
+                    <FormErrorMessage  mr="25px" dir="rtl" color="#944e4e">
                       رمز عبور را وارد کنید
                     </FormErrorMessage>
                   )}

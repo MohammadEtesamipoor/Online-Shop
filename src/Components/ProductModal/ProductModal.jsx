@@ -75,6 +75,7 @@ export function ProductModal({ statusModal, product, listCategory }) {
     const formData = new FormData(e.target);
     const formImg = new FormData();
     Array.from(filesRef.current.files).forEach((item) => {
+
       formImg.append("image", item);
     });
     const form = Object.fromEntries(formData);
@@ -148,6 +149,7 @@ export function ProductModal({ statusModal, product, listCategory }) {
       for (let item of event.target.files)
         imgList.push(URL.createObjectURL(item));
     }
+    console.log(imgList);
     setStateImg([...imgList]);
   };
   const checkBox = (check) => {

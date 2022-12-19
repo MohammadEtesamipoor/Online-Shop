@@ -6,7 +6,8 @@
   }
   .swiper-slide {
     /* Center slide text vertically */
-    height:600px;
+
+    height:90vh;
     background-color:rgba(132, 0, 255, 0.267);
   }
   
