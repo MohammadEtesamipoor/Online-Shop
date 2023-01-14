@@ -6,9 +6,9 @@
   }
   .swiper-slide {
     /* Center slide text vertically */
-    height:400px;
+
+    height:90vh;
     background-color:rgba(132, 0, 255, 0.267);
-    border-radius: 20px;
   }
   
 

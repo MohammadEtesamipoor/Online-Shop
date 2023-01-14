@@ -8,10 +8,12 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { PostOrders } from "apis/ApiOrders";
 import DateObject from "react-date-object";
 import { Formik, Form, ErrorMessage } from "formik";
+import backetEmp from 'Assets/Images/backet.jpg'
 import {
   Box,
   Heading,
   Button,
+  Image,
   Text,
   Divider,
   NumberInput,
@@ -44,6 +46,7 @@ import { useEffect, useRef, useState } from "react";
 import { GET_PRODUCTS } from "Configs/url";
 import { ADD_CART, DECREMENT_CART, REMOVE_CART } from "store/type/BasketType";
 import { FieldDate, FieldInput } from "Components/Input/Input";
+import { addTOBasket } from "store/action/setCategory";
 export function BasketPage() {
   const toast = useToast();
   const navigate = useNavigate();
@@ -51,7 +54,7 @@ export function BasketPage() {
   const [value, setValue] = useState(new Date());
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  const listCart = useSelector((state) => state.cartListID);
+  const listCart = useSelector((state) => state.basket.cartListID);
   const dispatch = useDispatch();
   const [dataCart, setDataCart] = useState();
   const [dateState, setDateState] = useState();
@@ -137,7 +140,10 @@ export function BasketPage() {
   };
 
   return (
-    <Box mx="32px" my="32px" display="flex" gap="200px">
+    <>
+    {
+      listCart.length >= 1?
+    <Box mx="32px" my="70px" display="flex" flexDirection={{base:'column',md:'row'}} gap="200px">
       {/* list Cart */}
       <Box flex="0.7">
         <Box display="flex" flexDirection="column" gap="10px">
@@ -208,13 +214,7 @@ export function BasketPage() {
                                   onClick={() =>
                                     +itemCart.quantity <
                                       +productCart["count"] &&
-                                    dispatch({
-                                      type: ADD_CART,
-                                      paylad: {
-                                        id: productCart.id,
-                                        sizeShoes: itemCart.sizeShoes,
-                                      },
-                                    })
+                                      dispatch(addTOBasket(productCart.id,itemCart.sizeShoes))
                                   }
                                 />
                                 <NumberDecrementStepper
@@ -392,7 +392,13 @@ export function BasketPage() {
           </ModalContent>
         </Modal>
       </Box>
-    </Box>
+    </Box>:
+      <Box justifyContent="center" mx="32px" my="32px" display="flex" gap="200px">
+        <Image w="40%" h="40%" src={backetEmp} />
+      </Box>
+        
+    }
+    </>
   );
 }
 

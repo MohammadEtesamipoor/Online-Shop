@@ -10,9 +10,10 @@ export async function AddProducts(data) {
     }
 }
 
-export async function GetProducts(config) {
+export async function GetProducts(config=null) {
     try {
-        const response = await HttpService.get(GET_PRODUCTS,config);
+        const isConfig=config?`?category-id=${config}`:'/'
+        const response = await HttpService.get(GET_PRODUCTS+isConfig);
         return response;
     } catch (e) {
         return Promise.reject(e);

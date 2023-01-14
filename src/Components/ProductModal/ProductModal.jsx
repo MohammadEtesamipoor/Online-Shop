@@ -23,12 +23,12 @@ import {
   FormErrorMessage,
   Image,
   FormHelperText,
+  Tooltip,
   Select,
   Box,
   RangeSlider,
   RangeSliderTrack,
   RangeSliderFilledTrack,
-  Tooltip,
   RangeSliderThumb,
   Accordion,
   AccordionItem,
@@ -42,22 +42,25 @@ import {
   Drawer,
   useToast,
 } from "@chakra-ui/react";
-import { AddProducts } from "apis/ApiProduct";
+import { AddProducts, UpdateProducts } from "apis/ApiProduct";
 import { UploadImage } from "apis/ApiUploadImage";
 import React, { useEffect, useState, useRef } from "react";
 
-
-export function ProductModal({ statusModal,product }) {
+export function ProductModal({ statusModal, product, listCategory }) {
   const toast = useToast();
   const [sliderValueStart, setSliderValueStart] = useState("30");
   const [stateImg, setStateImg] = useState([]);
+  const [stateCategory, setStateCategory] = useState();
   const [sliderValueEnd, setSliderValueEnd] = useState("54");
   const [showTooltip, setShowTooltip] = useState(true);
   const [checkSize, setCheckSize] = useState(38, 40, 42);
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const filesRef = useRef(null);
   const refCheackbox = useRef(null);
+
+  useEffect(() => {
+    setStateCategory(listCategory);
+  }, [stateCategory]);
 
   useEffect(() => {
     onOpen();
@@ -72,6 +75,7 @@ export function ProductModal({ statusModal,product }) {
     const formData = new FormData(e.target);
     const formImg = new FormData();
     Array.from(filesRef.current.files).forEach((item) => {
+
       formImg.append("image", item);
     });
     const form = Object.fromEntries(formData);
@@ -82,29 +86,60 @@ export function ProductModal({ statusModal,product }) {
       res.data.map((item) => {
         form.images.push(item.filename);
       });
-
-      AddProducts(form).then((res) => {
-        toast({
-          status: "success",
-          duration: 3000,
-          position: "bottom",
-          isClosable: true,
-          render: () => (
-            <Box>
-              <Alert
-                display="flex"
-                justifyContent="flex-end"
-                status="success"
-                variant="solid"
-              >
-                محصول اضافه شد
-                <AlertIcon ml="8px" />
-              </Alert>
-            </Box>
-          ),
-        });
-        onClose();
-      });
+    const categoryID= form['category-id'].split("-")
+    form['category-id']= categoryID[1]
+      if (stateImg.length <= 0) {
+        form.images = product.images;
+        form.checkSize = product.checkSize;
+      }
+      // UpdateProducts
+      !product
+        ? AddProducts(form).then((res) => {
+            toast({
+              status: "success",
+              duration: 3000,
+              position: "bottom",
+              isClosable: true,
+              render: () => (
+                <Box>
+                  <Alert
+                    display="flex"
+                    justifyContent="flex-end"
+                    status="success"
+                    variant="solid"
+                  >
+                    محصول اضافه شد
+                    <AlertIcon ml="8px" />
+                  </Alert>
+                </Box>
+              ),
+            });
+            onClose();
+            setStateImg([]);
+          })
+        : AddProducts(form).then((res) => {
+            toast({
+              status: "success",
+              duration: 3000,
+              position: "bottom",
+              isClosable: true,
+              render: () => (
+                <Box>
+                  <Alert
+                    display="flex"
+                    justifyContent="flex-end"
+                    status="success"
+                    variant="solid"
+                  >
+                    محصول اضافه شد
+                    <AlertIcon ml="8px" />
+                  </Alert>
+                </Box>
+              ),
+            });
+            onClose();
+            setStateImg([]);
+          });
     });
   };
 
@@ -114,6 +149,7 @@ export function ProductModal({ statusModal,product }) {
       for (let item of event.target.files)
         imgList.push(URL.createObjectURL(item));
     }
+    console.log(imgList);
     setStateImg([...imgList]);
   };
   const checkBox = (check) => {
@@ -133,11 +169,15 @@ export function ProductModal({ statusModal,product }) {
         <ModalOverlay />
         <form onSubmit={handelOnSubmit}>
           <ModalContent dir="rtl">
-            <ModalCloseButton />
+            <ModalCloseButton
+              onClick={() => {
+                setStateImg([]);
+              }}
+            />
             <ModalHeader mr="20px">افزودن/ویرایش محصول</ModalHeader>
             <ModalBody pb={6} display="flex" flexDirection="column" gap="60px">
               <Box display="flex" justifyContent="space-between" gap="40px">
-                <FormControl width="20%" isRequired>
+                <FormControl width="20%">
                   <FormLabel>انتخاب تصویر</FormLabel>
                   <Input
                     variant="flushed"
@@ -155,25 +195,49 @@ export function ProductModal({ statusModal,product }) {
                   borderColor="gray.200"
                   width="80%"
                 >
-                  {stateImg?.map((item) => (
-                    <Image
-                      boxSize="100px"
-                      objectFit="contain"
-                      src={item}
-                      alt="product"
-                    />
-                  ))}
+                  {stateImg.length <= 0
+                    ? product &&
+                      product["images"].map((imgItemEdit) => (
+                        <div
+                          style={{
+                            backgroundImage: `url(http://localhost:3001/files/${imgItemEdit})`,
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: " contain, cover",
+                            backgroundPosition: "bottom",
+                            width: "100px",
+                            height: "100px",
+                          }}
+                        ></div>
+                      ))
+                    : stateImg &&
+                      stateImg?.map((item) => (
+                        <Image
+                          boxSize="100px"
+                          objectFit="contain"
+                          src={item}
+                          alt="product"
+                        />
+                      ))}
                 </Box>
               </Box>
 
               <Box display="flex" justifyContent="space-between" gap="40px">
                 <FormControl isRequired>
                   <FormLabel>نام کالا</FormLabel>
-                  <Input name="product-name-fa" variant="flushed" value={product&&product['product-name-fa']}/>
+                  <Input
+                    name="product-name-fa"
+                    variant="flushed"
+                    value={product && product["product-name-fa"]}
+                  />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>قیمت کالا</FormLabel>
-                  <Input name="price" type="number" variant="flushed" value={product&&product['price']} />
+                  <Input
+                    name="price"
+                    type="number"
+                    variant="flushed"
+                    value={product && product["price"]}
+                  />
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel>دسته بندی</FormLabel>
@@ -184,8 +248,9 @@ export function ProductModal({ statusModal,product }) {
                     placeholder="یک گزینه انتخاب کنید"
                     name="category-id"
                   >
-                    <option>3</option>
-                    <option>2</option>
+                    {stateCategory?.map((item) => (
+                           <option>{item['name-fa']}-{item.id}</option>
+                    ))}
                   </Select>
                 </FormControl>
               </Box>
@@ -200,7 +265,7 @@ export function ProductModal({ statusModal,product }) {
                     size="sm"
                     maxW={100}
                     max={100}
-                    defaultValue={product?product['count']:3}
+                    defaultValue={product ? product["count"] : 3}
                     min={1}
                     textAlign="right"
                   >
@@ -227,7 +292,7 @@ export function ProductModal({ statusModal,product }) {
                     size="sm"
                     textAlign="right"
                     name="description"
-                    value={product&&product['description']}
+                    value={product && product["description"]}
                   />
                 </FormControl>
               </Box>
@@ -237,7 +302,13 @@ export function ProductModal({ statusModal,product }) {
               <Button type="submit" colorScheme="blue" mr={3}>
                 ذخیره
               </Button>
-              <Button mr="10px" onClick={onClose}>
+              <Button
+                mr="10px"
+                onClick={() => {
+                  onClose();
+                  setStateImg([]);
+                }}
+              >
                 انصراف
               </Button>
             </ModalFooter>
@@ -258,9 +329,6 @@ const SliderThumbWithTooltip = ({ checkBox }) => {
   useEffect(() => {
     checkBox([...cheack]);
   }, [cheack]);
-  useEffect(() => {
-    console.log(checkCount);
-  }, [checkCount]);
 
   const setSliderValues = (e) => {
     // e.preventDefault();

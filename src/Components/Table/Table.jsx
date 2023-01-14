@@ -57,7 +57,7 @@ export const TableAdminPage = (props) => {
   };
   return (
     <>
-      {statusModal ? <ProductModal product={ProductModalEdit}  statusModal={statusModal} /> : null}
+      {statusModal ? <ProductModal listCategory={props.listCategory} product={ProductModalEdit}  statusModal={statusModal} /> : null}
       <TableContainer maxWidth="100%" whiteSpace="normal">
         <Table variant="striped">
           <TableCaption>

@@ -1,5 +1,6 @@
 export const PAGE={
     Main:'/',
+    N404:'*',
     Home:'/home',
     Products:'/products',
     Product:'/product',

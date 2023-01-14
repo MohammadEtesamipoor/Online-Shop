@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { ADD_CART } from "store/type/BasketType";
@@ -21,10 +21,13 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverBody,
-  ButtonGroup
+  ButtonGroup,
+  Flex,
 } from "@chakra-ui/react";
 import { useState } from "react";
-export function ProductCard({ itemProduct, itemCategory }) {
+import { addTOBasket } from "store/action/setCategory";
+export function ProductCard({ itemProduct, nameCategory }) {
+  const navigate= useNavigate();
   const dispatch = useDispatch();
   const formatter = new Intl.NumberFormat("fa-IR", {
     currency: "IRR",
@@ -39,40 +42,43 @@ export function ProductCard({ itemProduct, itemCategory }) {
   const handelHoverImg = (index) => {
     index && setHoverImgProduct(index);
   };
+
   return (
     <Box
       onMouseEnter={handelMouseOver}
       onMouseLeave={handelMouseOut}
       _hover={{
-        transform: "translateY(-10px)",
+        // transform: "translateY(+30px)",
         boxShadow: "3xl",
       }}
       role={"group"}
-      p={6}
-      maxW={"30%"}
-      w={"full"}
+      p={8}
+      maxH={"280px"}
+      maxW={{ base:"190px",sm:'240px'}}
+      minH={"280px"}
+      minW={{ base:"190px",sm:'240px'}}
       boxShadow="xs"
       rounded={"lg"}
       pos={"relative"}
       zIndex={1}
-      bg="#c1c6d421 "
+      bg="#c1c6d439 "
       color="#2c2c2c"
     >
       <Box
         rounded={"lg"}
         mt={-12}
         pos={"relative"}
-        height={"230px"}
+        maxH={"100px"}
         _after={{
           transition: "all .3s ease",
           content: '""',
           w: "full",
           h: "full",
           pos: "absolute",
-          top: 5,
+          top: 0,
           left: 0,
           backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[hoverImgProduct]})`,
-          filter: "blur(15px)",
+          filter: "blur(20px)",
           zIndex: -1,
         }}
         _groupHover={{
@@ -82,20 +88,28 @@ export function ProductCard({ itemProduct, itemCategory }) {
         }}
       >
         <Box>
-          <Link to={`product/${itemProduct.id}`}>
-            <div
-              style={{
-                backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[hoverImgProduct]})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: " contain, cover",
-                backgroundPosition: "bottom",
-                width: "282px",
-                height: "230px",
-                transform:
-                  hoverImgProduct === 0 ? "rotate(-40deg)" : "rotate(0deg)",
-              }}
-            ></div>
-          </Link>
+
+            <Box
+            onClick={()=>{
+              navigate(`/product/${itemProduct.id}`, {replace: true})
+            }
+              //  redirect(`product/${itemProduct.id}`)
+              }
+            width="100%" display="flex" justifyContent="center">
+              <div
+                style={{
+                  backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[hoverImgProduct]})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: " contain, cover",
+                  backgroundPosition: "bottom",
+                  width: "130px",
+                  marginTop: "10px",
+                  height: "130px",
+                  transform:
+                    hoverImgProduct === 0 ? "rotate(0deg)" : "rotate(0deg)",
+                }}
+              ></div>
+            </Box>
           {hoverImgProduct !== 0 ? (
             <Box display="flex" justifyContent="center">
               <Popover isLazy>
@@ -118,22 +132,22 @@ export function ProductCard({ itemProduct, itemCategory }) {
                   <PopoverArrow />
                   <PopoverCloseButton />
                   <PopoverBody>
-                    <ButtonGroup flexWrap="wrap" gap="10px" size="sm" isAttached variant="outline">
-                      {
-                        itemProduct.checkSize.map(sizeShoes=>(
-                         <Button
-                         onClick={() =>
-                          dispatch({
-                            type: ADD_CART,
-                            paylad: {
-                              id: itemProduct.id,
-                              sizeShoes:sizeShoes
-                            },
-                          })
-                        }
-                         >{sizeShoes}</Button>
-                        ))
-                      }
+                    <ButtonGroup
+                      flexWrap="wrap"
+                      gap="10px"
+                      size="sm"
+                      isAttached
+                      variant="outline"
+                    >
+                      {itemProduct.checkSize.map((sizeShoes) => (
+                        <Button
+                          onClick={() =>
+                            dispatch(addTOBasket(itemProduct.id,sizeShoes))
+                          }
+                        >
+                          {sizeShoes}
+                        </Button>
+                      ))}
                     </ButtonGroup>
                   </PopoverBody>
                 </PopoverContent>
@@ -145,9 +159,9 @@ export function ProductCard({ itemProduct, itemCategory }) {
       {hoverImgProduct === 0 ? (
         <Stack pt={10} align={"center"}>
           <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
-            {itemCategory["name-fa"]}
+            {nameCategory}
           </Text>
-          <Heading fontSize={"2xl"} fontFamily={"body"} fontWeight={500}>
+          <Heading  as='b' fontSize={"md"} fontFamily={"body"} fontWeight={900}>
             {itemProduct["product-name-fa"]}
           </Heading>
           <Stack direction={"row"} align={"center"}>
@@ -158,16 +172,19 @@ export function ProductCard({ itemProduct, itemCategory }) {
                 color: "#6a64c4",
               }}
             >
-              <FaShoppingCart fontSize="50px" />
+              {/* <FaShoppingCart fontSize="50px" /> */}
             </Box>
-            <Text as={'b'} color={"gray.800"}>
+            <Flex flexDirection="column" gap="1">
+            <Text textAlign="center"  fontSize={"sm"} textDecoration={"line-through"} color={"gray.600"}>
+              {formatter.format(itemProduct["price"] * 1.1)}{" "}
+              <span style={{ fontSize: "8px" }}>ريال</span>
+            </Text>
+            <Text textAlign="center"  fontSize={"lg"}  as={"b"} color={"gray.800"}>
               {formatter.format(itemProduct["price"])}{" "}
-                      <span style={{ fontSize: "8px" }}>ريال</span>
+              <span style={{ fontSize: "8px" }}>ريال</span>
             </Text>
-            <Text textDecoration={"line-through"} color={"gray.600"}>
-            {formatter.format(itemProduct["price"] * 1.1)}{" "}
-            <span style={{ fontSize: "8px" }}>ريال</span>
-            </Text>
+
+            </Flex>
           </Stack>
         </Stack>
       ) : (

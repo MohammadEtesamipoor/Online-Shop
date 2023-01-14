@@ -82,7 +82,7 @@ export const TableOrdersPage = (props) => {
           </TableCaption>
           <Thead>
             <Tr>
-              <Th>نامم کاربر</Th>
+              <Th>نام کاربر</Th>
               <Th>مجموع مبلغ</Th>
               <Th>زمان ثبت سفارش</Th>
               <Th>وضعیت</Th>
