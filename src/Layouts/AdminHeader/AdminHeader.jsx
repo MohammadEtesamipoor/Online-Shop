@@ -35,7 +35,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState("order");
   return (
-    <Box mb="-80px">
+    <Box mb="-40px">
       <Flex
         alignItems="center"
         w="100%"
@@ -95,7 +95,7 @@ const Header = () => {
             }}
             to="/"
           >
-            <Text fontSize="md">خروج از حساب</Text>
+            <Text fontSize="md">خروج از حسالب</Text>
           </Link>
         </Flex>
       </Flex>

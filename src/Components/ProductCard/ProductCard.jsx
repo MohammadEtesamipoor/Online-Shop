@@ -26,6 +26,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { addTOBasket } from "store/action/setCategory";
+import { BASE_URL } from "Configs/variable.config";
 export function ProductCard({ itemProduct, nameCategory }) {
   const navigate= useNavigate();
   const dispatch = useDispatch();
@@ -54,18 +55,22 @@ export function ProductCard({ itemProduct, nameCategory }) {
       role={"group"}
       p={8}
       maxH={"280px"}
-      maxW={{ base:"190px",sm:'240px'}}
+      // maxW={{ base:"190px",sm:'240px'}}
+      mx="10px"
       minH={"280px"}
-      minW={{ base:"190px",sm:'240px'}}
+      maxW={{md:"280px"}}
+      minW={{md:"280px"}}
+
+      // minW={{ base:"190px",sm:'240px'}}
       boxShadow="xs"
-      rounded={"lg"}
+      rounded={"md"}
       pos={"relative"}
       zIndex={1}
-      bg="#c1c6d439 "
+      bg="#E4E4E4"
       color="#2c2c2c"
     >
       <Box
-        rounded={"lg"}
+        rounded={"md"}
         mt={-12}
         pos={"relative"}
         maxH={"100px"}
@@ -77,7 +82,7 @@ export function ProductCard({ itemProduct, nameCategory }) {
           pos: "absolute",
           top: 0,
           left: 0,
-          backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[hoverImgProduct]})`,
+          backgroundImage: `url(${BASE_URL}/files/${itemProduct.images[hoverImgProduct]})`,
           filter: "blur(20px)",
           zIndex: -1,
         }}
@@ -98,7 +103,7 @@ export function ProductCard({ itemProduct, nameCategory }) {
             width="100%" display="flex" justifyContent="center">
               <div
                 style={{
-                  backgroundImage: `url(http://localhost:3001/files/${itemProduct.images[hoverImgProduct]})`,
+                  backgroundImage: `url(${BASE_URL}/files/${itemProduct.images[hoverImgProduct]})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: " contain, cover",
                   backgroundPosition: "bottom",
@@ -158,15 +163,15 @@ export function ProductCard({ itemProduct, nameCategory }) {
       </Box>
       {hoverImgProduct === 0 ? (
         <Stack pt={10} align={"center"}>
-          <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
+          <Text color={"gray.500"} display={{base:'none',sm:'inline'}} fontSize={"sm"} textTransform={"uppercase"}>
             {nameCategory}
           </Text>
-          <Heading  as='b' fontSize={"md"} fontFamily={"body"} fontWeight={900}>
+          <Text textAlign="center"  as='b' fontSize={{base:"xs",sm:'md'}} fontFamily={"body"} fontWeight={900}>
             {itemProduct["product-name-fa"]}
-          </Heading>
+          </Text>
           <Stack direction={"row"} align={"center"}>
             <Box
-              shop
+             
               _hover={{
                 transform: "translateY(10px)",
                 color: "#6a64c4",
@@ -175,11 +180,11 @@ export function ProductCard({ itemProduct, nameCategory }) {
               {/* <FaShoppingCart fontSize="50px" /> */}
             </Box>
             <Flex flexDirection="column" gap="1">
-            <Text textAlign="center"  fontSize={"sm"} textDecoration={"line-through"} color={"gray.600"}>
+            <Text textAlign="center"  fontSize={{base:"xs",sm:'md'}} textDecoration={"line-through"} color={"gray.600"}>
               {formatter.format(itemProduct["price"] * 1.1)}{" "}
               <span style={{ fontSize: "8px" }}>ريال</span>
             </Text>
-            <Text textAlign="center"  fontSize={"lg"}  as={"b"} color={"gray.800"}>
+            <Text textAlign="center"  fontSize={{base:"xs",sm:'md'}}  as={"b"} color={"gray.800"}>
               {formatter.format(itemProduct["price"])}{" "}
               <span style={{ fontSize: "8px" }}>ريال</span>
             </Text>
@@ -206,7 +211,7 @@ export function ProductCard({ itemProduct, nameCategory }) {
             >
               <div
                 style={{
-                  backgroundImage: `url(http://localhost:3001/files/${img})`,
+                  backgroundImage: `url(${BASE_URL}/files/${img})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: " contain, cover",
                   backgroundPosition: "bottom",

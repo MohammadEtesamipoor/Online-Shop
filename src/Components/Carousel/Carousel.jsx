@@ -54,6 +54,8 @@ import ColorHeaderContext from "Context/headerColor";
 export default function MyCarousel() {
   const [swiper, setSwiper] = useState(null);
   const { color,setColor } = React.useContext(ColorHeaderContext);
+  const [theme,setTheme]=useState(localStorage.getItem("THEME"))
+
   const bgColorSilde = [
     "#bebebe",
     // "#7c8c87",
@@ -76,9 +78,9 @@ export default function MyCarousel() {
   //     else{
   //       setColor({
   //         theme:color.theme,
-  //         clr:color.clr,
+  //         clr:color[color.selected].clr,
   //         // clr:"#313238",
-  //         bgClr:color.bgClr
+  //         bgClr:[theme]
   //         // bgClr:"#9394a5"
   //       })
   //     }
@@ -122,13 +124,13 @@ export default function MyCarousel() {
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg={color.bgClr}
+              bg={[theme]}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="xl" color={color.clr}>
+                  <Heading as="b" size="xl" color={color[color.selected].clr}>
                   کیف و کوله پوشتی  
                   </Heading>
                   <Heading
@@ -136,7 +138,7 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                    color={color.clr}
+                    color={color[color.selected].clr}
                   >
                     جدید ترین کیف ها
                   </Heading>
@@ -170,10 +172,10 @@ export default function MyCarousel() {
         </SwiperSlide>
         <SwiperSlide>
           <div>
-            <Box padding="50px" bg={color.bgClr} width="100%" height="100%">
+            <Box padding="50px" bg={[theme]} width="100%" height="100%">
               <Box display="felx" flexDirection="column">
                 <Box>
-                            کفش مردانه        <Heading as="b" size="2xl"  color={color.clr}>
+                            کفش مردانه        <Heading as="b" size="2xl"  color={color[color.selected].clr}>
   
                   </Heading>
                   <Heading
@@ -182,7 +184,7 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                     color={color.clr}
+                     color={color[color.selected].clr}
                   >
                     جدید ترین کفش های مردانه
                   </Heading>
@@ -217,10 +219,10 @@ export default function MyCarousel() {
         </SwiperSlide>
         <SwiperSlide>
           <div>
-            <Box padding="50px" bg={color.bgClr} width="100%" height="100%">
+            <Box padding="50px" bg={color[color.selected].bgClr} width="100%" height="100%">
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="2xl"  color={color.clr}>
+                  <Heading as="b" size="2xl"  color={color[color.selected].clr}>
                کفش زنانه     
                   </Heading>
                   <Heading
@@ -228,7 +230,7 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                     color={color.clr}
+                     color={color[color.selected].clr}
                   >
                     جدید ترین کفش های زنانه
                   </Heading>
@@ -267,13 +269,13 @@ export default function MyCarousel() {
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg={color.bgClr}
+              bg={[theme]}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="xl"  color={color.clr}>
+                  <Heading as="b" size="xl"  color={color[color.selected].clr}>
                     کفش مجلسی مردانه
                   </Heading>
                   <Heading
@@ -281,7 +283,7 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                     color={color.clr}
+                     color={color[color.selected].clr}
                   >
                     جدید ترین کفش های مجلسی مردانه
                   </Heading>
@@ -319,13 +321,13 @@ export default function MyCarousel() {
             <Box
               padding="50px"
               // borderRadius="15px"
-              bg={color.bgClr}
+              bg={[theme]}
               width="100%"
               height="100%"
             >
               <Box display="felx" flexDirection="column">
                 <Box>
-                  <Heading as="b" size="2xl"  color={color.clr}>
+                  <Heading as="b" size="2xl"  color={color[color.selected].clr}>
                     کفش اسپرت
                   </Heading>
                   <Heading
@@ -333,7 +335,7 @@ export default function MyCarousel() {
                     marginX="10px"
                     as="h6"
                     size="xs"
-                     color={color.clr}
+                     color={color[color.selected].clr}
                   >
                     جدید ترین کفش اسپرت
                   </Heading>

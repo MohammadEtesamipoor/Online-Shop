@@ -35,6 +35,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { DeleteProducts } from "apis/ApiProduct";
 import { FaEdit, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import { BASE_URL } from "Configs/variable.config";
 export const TableAdminPage = (props) => {
   const [statusModal, setStatusModal] = useState();
   const [ProductModalEdit, setProductModalEdit] = useState();
@@ -85,7 +86,7 @@ export const TableAdminPage = (props) => {
                 <Td>
                   <div
                     style={{
-                      backgroundImage: `url(http://localhost:3001/files/${item.images[0]})`,
+                      backgroundImage: `url(${BASE_URL}/files/${item.images[0]})`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: " contain, cover",
                       backgroundPosition: "bottom",

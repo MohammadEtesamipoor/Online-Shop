@@ -44,6 +44,7 @@ import {
 } from "@chakra-ui/react";
 import { AddProducts, UpdateProducts } from "apis/ApiProduct";
 import { UploadImage } from "apis/ApiUploadImage";
+import { BASE_URL } from "Configs/variable.config";
 import React, { useEffect, useState, useRef } from "react";
 
 export function ProductModal({ statusModal, product, listCategory }) {
@@ -183,7 +184,7 @@ export function ProductModal({ statusModal, product, listCategory }) {
                     variant="flushed"
                     type="file"
                     multiple
-                    ref={filesRef}
+                 filesRef
                     onChange={(e) => changeImg(e)}
                   />
                 </FormControl>
@@ -200,7 +201,7 @@ export function ProductModal({ statusModal, product, listCategory }) {
                       product["images"].map((imgItemEdit) => (
                         <div
                           style={{
-                            backgroundImage: `url(http://localhost:3001/files/${imgItemEdit})`,
+                            backgroundImage: `url(${BASE_URL}/files/${imgItemEdit})`,
                             backgroundRepeat: "no-repeat",
                             backgroundSize: " contain, cover",
                             backgroundPosition: "bottom",

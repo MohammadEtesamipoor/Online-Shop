@@ -1,5 +1,6 @@
 import { GetDataProducts } from "apis";
 import { GetProductsCategory } from "apis/ApiCategory";
+import { GetProducts } from "apis/ApiProduct";
 import { GET_PRODUCTS } from "Configs/url";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,13 +26,20 @@ function App() {
   };
 
   useEffect(() => {
-    const getUsers = async () => {
+    const getCate = async () => {
       const users = await GetProductsCategory().then((res) => {
          dispatch(setCategory(res.data));
         return setDataa(res.data);
       });  
     };
-    getUsers()
+    getCate()
+    // const GetDataProducts = async () => {
+    //   const users = await GetProducts().then((res) => {
+    //      dispatch(setCategory(res.data));
+    //     return setDataa(res.data);
+    //   });  
+    // };
+    // GetDataProducts()
   }, []);
 
   return (

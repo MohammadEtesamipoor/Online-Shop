@@ -34,14 +34,27 @@ import { GET_PRODUCTS } from "Configs/url";
 
 export const Routing = () => {
   const dispatch = useDispatch();
-  const [DataProducts,setDataProducts] =useState([]);
+  const [DataProducts, setDataProducts] = useState([]);
+  const [theme,setTheme] = useState()
+  
+  useEffect(()=>{
+    if(localStorage.getItem("THEME")===null) localStorage.setItem("THEME","light");
 
+  },[])
   const [color, setColor] = useState({
-    theme: "light",
-    clr: "#313238",
-    // clr:"#313238",
-    bgClr: "#F9F9F9",
-    // bgClr:"#9394a5"
+    selected:"light",
+    "dark":{
+      clr: "#F3F3F3",
+      // clr:"#313238",
+      bgClr: "#313238",
+      // bgClr:"#9394a5"
+    },
+    "light":{
+      clr: "#313238",
+      // clr:"#313238",
+      bgClr: "#F9F9F9",
+      // bgClr:"#9394a5"
+    },
   });
   return (
     <Box fontSize="sm">
@@ -65,12 +78,12 @@ export const Routing = () => {
                 />
                 <Route
                   path={`${PAGE.Products}/:categoryId`}
-                  element={<Layout main={<ProductsPage  />} replace /> }
+                  element={<Layout main={<ProductsPage />} replace />}
                 />
 
                 <Route
                   path={PAGE.Product}
-                  element={<Layout main={<ProductPage />}replace  />}
+                  element={<Layout main={<ProductPage />} replace />}
                 />
                 <Route
                   path="/product/:productId"

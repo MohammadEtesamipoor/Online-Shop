@@ -11,12 +11,15 @@ import {
 } from "store/type/BasketType";
 
 const initialStateCart = {
-  cartListID: [],
+  cartListID: localStorage.getItem("basket")===null?[]:JSON.parse(localStorage.getItem("basket")),
   dataProduct: [],
   dataCategory: [],
 };
 
-export const reducerCategory = (state = initialStateCart, { type, payload }) => {
+export const reducerCategory = (
+  state = initialStateCart,
+  { type, payload }
+) => {
   switch (type) {
     case GET_CATEGORIES:
       return { ...state, dataCategory: payload };
@@ -28,7 +31,6 @@ export const reducerCategory = (state = initialStateCart, { type, payload }) => 
 export const reducerBasket = (state = initialStateCart, action) => {
   switch (action.type) {
     case ADD_CART:
-      console.log("injavase="+action.paylad.id);
       let isRepeat = false;
       state.cartListID?.map((item) => {
         if (
@@ -39,21 +41,20 @@ export const reducerBasket = (state = initialStateCart, action) => {
           isRepeat = true;
         }
       });
+      const cartlist =
+        isRepeat === true
+          ? [...state.cartListID]
+          : [
+              ...state.cartListID,
+              {
+                productId: action.paylad.id,
+                quantity: 1,
+                sizeShoes: action.paylad.sizeShoes,
+              },
+            ];
+      localStorage.setItem("basket", JSON.stringify(cartlist));
       return {
-
-        cartListID:
-          isRepeat === true
-            ? [...state.cartListID]
-            : [
-                ...state.cartListID,
-                {
-                  productId: action.paylad.id,
-                  quantity: 1,
-                  sizeShoes: action.paylad.sizeShoes,
-                },
-              ],
-          
-             
+        cartListID:cartlist
       };
       break;
     case DECREMENT_CART:
@@ -67,19 +68,20 @@ export const reducerBasket = (state = initialStateCart, action) => {
           isRepeatRemove = true;
         }
       });
-      return {
+      cartlist=  isRepeatRemove === true
+      ? [...state.cartListID]
+      : [
+          ...state.cartListID,
+          {
+            productId: action.paylad.id,
+            quantity: 1,
+            sizeShoes: action.paylad.sizeShoes,
+          },
+        ]
+      localStorage.setItem("basket", JSON.stringify(cartlist));
 
-        cartListID:
-          isRepeatRemove === true
-            ? [...state.cartListID]
-            : [
-                ...state.cartListID,
-                {
-                  productId: action.paylad.id,
-                  quantity: 1,
-                  sizeShoes: action.paylad.sizeShoes,
-                },
-              ]
+      return {
+        cartListID:cartlist 
       };
       break;
     case REMOVE_CART:
@@ -92,16 +94,15 @@ export const reducerBasket = (state = initialStateCart, action) => {
           newCartListID.push(item);
         }
       });
+      localStorage.setItem("basket", JSON.stringify(newCartListID));
       return {
         cartListID: [...newCartListID],
       };
       break;
     default:
-      return state
+      return state;
   }
 };
-
-
 
 // export function GetCat() {
 //   const dispatch = useDispatch();

@@ -8,7 +8,7 @@ import menLogo from "Assets/Images/menLogo.png";
 import { PAGE } from "Configs/route";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import {
   Box,
   Link,
@@ -32,25 +32,38 @@ import {
   FaRegArrowAltCircleRight,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "Configs/variable.config";
+import CartCategory from "Components/CartCategory/CartCategory";
+import CartArticle from "Components/Article/CartArticle";
+import OfferBanner from "Components/OfferBanner/OfferBanner";
+import LatestNews from "Components/LatestNews/LatestNews";
+import Brands from "Components/Brands/Brands";
 export function HomePage() {
   const navigate = useNavigate();
   const [categoryData, setCategoryData] = useState();
   const [productData, setProductData] = useState({});
   const [imageZoom, setImageZoom] = useState();
+  const [theme,setTheme]=useState(localStorage.getItem("THEME"))
+
   const { color, setColor } = React.useContext(ColorHeaderContext);
   useEffect(() => {
     const ar = [];
+    
     const fetchData = async () => {
-      await GetProductsCategory().then((res) => {
+      await GetProductsCategory(`?childs=true`).then((res) => {
         setCategoryData(res.data);
         res.data.map(async (cat) => {
           await GetProducts(cat.id + `&_limit=7`).then((response) => {
-            ar.push({
-              nameCategory: cat["name-fa"],
-              icon: cat["icon"],
-              id: cat["id"],
-              data: response.data,
-            });
+            console.log(response.data );
+            if (response.data !== []) {
+              ar.push({
+                nameCategory: cat["name-fa"],
+                icon: cat["icon"],
+                id: cat["id"],
+                parentId: cat["parentId"],
+                data: response.data,
+              });
+            }
           });
           setProductData(ar);
         });
@@ -91,139 +104,149 @@ export function HomePage() {
   };
   return (
     <Box
-      color={color.clr}
-      bg={color.theme === "dark" ? "#444444" : "#ebebeb90"}
-      mx="0px"
-      my="0px"
+      color={color[color.selected].clr}
+      bg={color[color.selected].bgClr}
+
     >
-      <CarouselCat />
+      <Box  >
+      <CarouselCat /> 
 
+      </Box>
+      {/* CartCategory */}
+      <Box px={{base:"0px",md:"60px"}}>
+        <Box color={color["light"].clr}>
+      <CartCategory  />
+        </Box>
+      {/* <Article></Article> */}
+      <CartArticle></CartArticle>
+      {/* product list */}
       <Box
-
-        mx="32px"
-        my="32px"
-      >
+      my="32px">
         {productData.length > 2 ? (
           <Box display="flex" flexDirection="column" gap="40px">
-            {productData.map((itemProduct) => (
-              <Flex
-                key={itemProduct.data.id}
-                bg="red.400"
-                borderRadius="xl"
-                p="6"
-                maxH="300px"
-                gap="4"
-                justifyContent="center"
-                alignItems="center"
-                // display="flex"
-              >
-                {/* <Box bg="red.400" borderRadius="xl" p="10" display="flex" > */}
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  flexDirection="column"
-                  width={{base:"30%",sm:'20%'}}
-                >
-                  <Heading
-                    align="center"
-                    fontSize="24px"
-                    color="white"
-                    className="font-enenen"
-                  >
-                    {itemProduct["nameCategory"]}
-                  </Heading>
-                  <div
+            {productData.map(
+              (itemProduct) =>
+                itemProduct.parentId !== "" && (
+                  <Flex
                     style={{
-                      backgroundImage: `url(http://localhost:3001/files/${itemProduct.icon})`,
-                      backgroundRepeat: "no-repeat",
-                      backgroundSize: " contain, cover",
-                      backgroundPosition: "center",
-                      width: "130px",
-                      height: "130px",
+                      backgroundColor: "#B6B4AC",
                     }}
-                  ></div>
-
-                  <Link
-                    align="center"
-                    fontSize="16px"
-                    color="white"
-                    display="flex"
-                    gap="2"
-                    className="font-enenen"
-                    onClick={() => {
-                      navigate(`/products/${itemProduct.id}`);
-                    }}
+                    key={itemProduct.data.id}
+                    borderRadius={{md:"md"}}
+                    p="6"
+                    maxH="300px"
+                    gap="4"
+                    justifyContent="center"
+                    alignItems="center"
+                    // display="flex"
                   >
-                    مشاهده همه <FaArrowLeft />
-                  </Link>
-                </Box>
-                <Box width={{base:"70%",sm:'80%'}}>
-                  <Carousel
-                    additionalTransfrom={0}
-                    arrows
-                    autoPlaySpeed={3000}
-                    centerMode={false}
-                    className=""
-                    containerClass="container"
-                    dotListClass=""
-                    draggable
+                    {/* <Box bg="red.400" borderRadius="xl" p="10" display="flex" > */}
+                    <Box
+                      alignItems="center"
+                      display="flex"
+                      flexDirection="column"
+                      width={{ base: "30%", sm: "20%" }}
+                    >
+                      <Heading
+                        align="center"
+                        fontSize="24px"
+                        color="white"
+                        className="font-enenen"
+                      >
+                        {itemProduct["nameCategory"]}
+                      </Heading>
+                      <Box
+                      w={{base:"80px",sm:"100px",md:"130px"}}
+                      h={{base:"80px",sm:"100px",md:"130px"}}
+                        style={{
+                          backgroundImage: `url(${BASE_URL}/files/${itemProduct.icon})`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundSize: " contain, cover",
+                          backgroundPosition: "center",
+                        }}
+                      ></Box>
 
-                    focusOnSelect={false}
-                    infinite={false}
-                    itemClass=""
-                    keyBoardControl
-                    minimumTouchDrag={80}
-                    pauseOnHover
-                    renderArrowsWhenDisabled={false}
-                    renderButtonGroupOutside={false}
-                    renderDotsOutside={false}
-                    responsive={{
-                      desktop: {
-                        breakpoint: {
-                          max: 3000,
-                          min: 1248,
-                        },
-                        items: 3,
-                        partialVisibilityGutter: 40,
-                      },
-                      mobile: {
-                        breakpoint: {
-                          max: 464,
-                          min: 0,
-                        },
-                        items: 1,
-                        partialVisibilityGutter: 30,
-                      },
-                      tablet: {
-                        breakpoint: {
-                          max: 1024,
-                          min: 928,
-                        },
-                        items: 2,
-                        partialVisibilityGutter: 30,
-                      },
-                    }}
-                    rewind={false}
-                    rewindWithAnimation={false}
-                    rtl={true}
-                    shouldResetAutoplay
-                    showDots={false}
-                    sliderClass=""
-                    slidesToSlide={1}
-                    swipeable
-                  >
-                    {itemProduct.data.map((item) => (
-                      <ProductCard
-                        key={item.id}
-                        itemProduct={item}
-                        nameCategory={itemProduct["nameCategory"]}
-                      />
-                    ))}
-                  </Carousel>
-                </Box>
-                {/* </Box> */}
-              </Flex>
-            ))}
+                      <Link
+                        align="center"
+                        fontSize="16px"
+                        color="white"
+                        display="flex"
+                        gap="2"
+                        className="font-enenen"
+                        onClick={() => {
+                          navigate(`/products/${itemProduct.id}`);
+                        }}
+                      >
+                        مشاهده همه <FaArrowLeft />
+                      </Link>
+                    </Box>
+                    <Box width={{ base: "70%", sm: "80%" }}>
+                      <Carousel
+                        additionalTransfrom={0}
+                        arrows
+                        autoPlaySpeed={3000}
+                        centerMode={false}
+                        className=""
+                        containerClass="container"
+                        dotListClass=""
+                        draggable
+                        focusOnSelect={false}
+                        infinite={false}
+                        itemClass=""
+                        keyBoardControl
+                        minimumTouchDrag={80}
+                        pauseOnHover
+                        renderArrowsWhenDisabled={false}
+                        renderButtonGroupOutside={false}
+                        renderDotsOutside={false}
+                        responsive={{
+                          desktop: {
+                            breakpoint: {
+                              max: 3000,
+                              min: 1248,
+                            },
+                            items: 3,
+                            partialVisibilityGutter: 40,
+                          },
+                          mobile: {
+                            breakpoint: {
+                              max: 464,
+                              min: 0,
+                            },
+                            items: 1,
+                            partialVisibilityGutter: 30,
+                          },
+                          tablet: {
+                            breakpoint: {
+                              max: 1024,
+                              min: 928,
+                            },
+                            items: 2,
+                            partialVisibilityGutter: 30,
+                          },
+                        }}
+                        rewind={false}
+                        rewindWithAnimation={false}
+                        rtl={true}
+                        shouldResetAutoplay
+                        showDots={false}
+                        sliderClass=""
+                        slidesToSlide={1}
+                        swipeable
+                      >
+                        {itemProduct.data.map((item) => (
+                          <ProductCard
+                            key={item.id}
+                            itemProduct={item}
+                            nameCategory={itemProduct["nameCategory"]}
+                          />
+                        ))}
+                      </Carousel>
+                    </Box>
+                    {/* </Box> */}
+                  </Flex>
+                )
+            )}
           </Box>
         ) : (
           <Box padding="6" boxShadow="lg" bg="white">
@@ -232,6 +255,23 @@ export function HomePage() {
           </Box>
         )}
       </Box>
+      {/* Offer Banner */}
+      <OfferBanner/>
+
+      {/* Latest News */}
+      <LatestNews />
+
+    {/* <Article></Article> */}
+    <CartArticle></CartArticle>
+
+      {/* Brands */}
+      <Box   bg={color["light"].bgClr}>
+      <Brands />
+      </Box>
+     
+
+      </Box>
+
     </Box>
   );
 }

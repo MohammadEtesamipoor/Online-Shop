@@ -11,15 +11,19 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import "../../Assets/Fonts/index.css";
+import ColorHeaderContext from "Context/headerColor";
 
 export default function Footer() {
+  
+  const [theme,setTheme]=useState(localStorage.getItem("THEME"))
+  const { color, setColor } = React.useContext(ColorHeaderContext);
   return (
     <Box
-
-      bg="gray.300"
-      color={useColorModeValue("gray.700", "gray.200")}
+    bottom="0"
+      bg={color[color.selected].bgClr}
+      color={color[color.selected].clr}
     >
       <Container
         as={Stack}
@@ -59,7 +63,7 @@ export default function Footer() {
             استفاده از مطالب و تصاویر فروشگاه اینترنتی تاپ کالا پیگرد قانونی
             دارد . کلیه حقوق این سایت متعلق به تاپ کالا می‌باشد
           </Text>
-          <Stack direction={"row"} spacing={6}>
+          <Stack color={'gray.700'} direction={"row"} spacing={6}>
             <Button label={"Twitter"} href={"#"}>
               <FaTwitter />
             </Button>

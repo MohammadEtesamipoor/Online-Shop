@@ -14,7 +14,7 @@ import ColorHeaderContext from "Context/headerColor";
 const CarouselCat = () => {
   const { color, setColor } = React.useContext(ColorHeaderContext);
   return (
-    <Box pt="25px" mt="35px">
+    <Box mt="-80px" >
       <Carousel
         width="100%"
         height="40%"
@@ -71,7 +71,7 @@ const CarouselCat = () => {
       >
 
         <Box
-          height={{ base: "100%", md: "400px" }}
+          height={{ base: "100%", md: "500px" }}
           bg="#9e8992"
           display="flex"
           justifyContent="center"
@@ -141,7 +141,7 @@ const CarouselCat = () => {
         </Box>
 
         <Box
-          height={{ base: "100%", md: "400px" }}
+          height={{ base: "100%", md: "500px" }}
           bg="#7c8c87"
           display="flex"
           justifyContent="center"
@@ -212,7 +212,7 @@ const CarouselCat = () => {
         </Box>
 
         <Box
-          height={{ base: "100%", md: "400px" }}
+          height={{ base: "100%", md: "500px" }}
           bg="#cfabab"
           display="flex"
           justifyContent="center"
@@ -283,7 +283,7 @@ const CarouselCat = () => {
         </Box>
 
         <Box
-          height={{ base: "100%", md: "400px" }}
+          height={{ base: "100%", md: "500px" }}
           bg="#9e8992"
           display="flex"
           justifyContent="center"
@@ -354,7 +354,7 @@ const CarouselCat = () => {
         </Box>
 
         <Box
-          height={{ base: "100%", md: "400px" }}
+          height={{ base: "100%", md: "500px" }}
           bg="#7c8c87"
           display="flex"
           justifyContent="center"

@@ -46,12 +46,16 @@ import {
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { GetProducts } from "apis/ApiProduct";
 import { addTOBasket } from "store/action/setCategory";
+import { BASE_URL } from "Configs/variable.config";
+import ColorHeaderContext from "Context/headerColor";
 export function ProductPage() {
   const [hoverImgProduct, setHoverImgProduct] = useState(1);
   const dispatch = useDispatch();
+  const { color, setColor } = React.useContext(ColorHeaderContext);
+
   const formatter = new Intl.NumberFormat("fa-IR", {
     currency: "IRR",
   });
@@ -75,7 +79,7 @@ export function ProductPage() {
     console.log(productData);
   }, []);
   return (
-    <Box overflowX={"hidden"} color="#2c2c2c">
+    <Box overflowX={"hidden"} color={color[color.selected].clr}>
       {productData ? (
         <Container maxW={"5xl"}>
           <Flex
@@ -97,7 +101,7 @@ export function ProductPage() {
                     <SwiperSlide  style={{width: "220px",height:'320px'}} className={styles.swiperSlide}>
                       <div
                         style={{
-                          backgroundImage: `url(http://localhost:3001/files/${item})`,
+                          backgroundImage: `url(${BASE_URL}/files/${item})`,
                           backgroundRepeat: "no-repeat",
                           backgroundSize: " contain, cover",
                           backgroundPosition: "center",
