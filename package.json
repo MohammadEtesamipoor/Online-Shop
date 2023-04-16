@@ -1,9 +1,11 @@
 {
+  "homepage":"http://MohammadEtesamipoor.github.io/maktab75-project-Mohammad-Etesamipoor",
   "name": "maktab75-project-mohammad-etesamipoor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.6",
+    "@chakra-ui/menu": "^2.1.5",
     "@chakra-ui/react": "^2.2.6",
     "@emotion/cache": "^11.10.1",
     "@emotion/react": "^11.10.0",
@@ -20,19 +22,29 @@
     "json-server": "^0.17.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-date-object": "^2.1.5",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
-    "react-router-dom": "^6.3.0",
+    "react-multi-carousel": "^2.8.2",
+    "react-multi-date-picker": "^3.3.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.8",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "sass": "^1.54.3",
     "styled-components": "^5.3.5",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "^2.1.1",
-    "web-vitals": "^2.1.0"
+    "swiper": "^8.3.2",
+    "web-vitals": "^2.1.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -54,5 +66,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }

@@ -43,11 +43,11 @@ export function AdminProductPage() {
     // {/* productData.length > 0 ? productData[0].count : "loadiing" */}
     <Box h="100%">
       {statusModal?
-      <ProductModal statusModal={statusModal} />:null
+      <ProductModal listCategory={CategoryProductData} statusModal={statusModal} />:null
     }
       <Box mt="20px" display="flex" justifyContent="space-between" px="4">
         <Heading color="#525261">مدیریت کالاها</Heading>
-        <Select dir="ltr" w="120px" placeholder="all">
+        {/* <Select dir="ltr" w="120px" placeholder="all">
           <option onChange={(e) => handelFilter("option1")} value="option1">
             samsung
           </option>
@@ -56,7 +56,7 @@ export function AdminProductPage() {
           </option>
           <option value="option3">nokia</option>
           <option value="option4">huawei</option>
-        </Select>
+        </Select> */}
         <Button rightIcon={<FaPlus />} colorScheme="teal" variant="outline"
         onClick={()=>{
           statusModal=="onOpen"?
@@ -73,11 +73,12 @@ export function AdminProductPage() {
           listCategory={CategoryProductData}
         />
       ) : (
-        <Stack mt="40px">
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-          <Skeleton startColor='gray.300' endColor='gray.200' height="20px" />
-        </Stack>
+        <Stack mt="40px" mx="20px">
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+        <Skeleton startColor="gray.200" endColor="gray.50" height="100px" />
+      </Stack>
       )}
     </Box>
   );

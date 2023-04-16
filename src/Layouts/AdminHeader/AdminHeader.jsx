@@ -22,6 +22,7 @@ import {
   TabPanels,
   TabPanel,
   useColorModeValue,
+  toastExp,
 } from "@chakra-ui/react";
 
 import { PhoneIcon, EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons";
@@ -29,11 +30,12 @@ import imgLogo from "../../Assets/Images/logo.png";
 import { FaShoppingBag, FaSearch, FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+
 const Header = () => {
   const navigate = useNavigate();
-  const [activePage, setActivePage] = useState("product");
+  const [activePage, setActivePage] = useState("order");
   return (
-    <Box mb="-80px">
+    <Box mb="-40px">
       <Flex
         alignItems="center"
         w="100%"
@@ -87,8 +89,13 @@ const Header = () => {
           </Button>
         </Stack>
         <Flex gap="6" alignItems="center">
-          <Link to="/">
-            <Text fontSize="md">بازگشت به سایت</Text>
+          <Link
+            onClick={() => {
+              localStorage.removeItem("ACCESS_TOKEN");
+            }}
+            to="/"
+          >
+            <Text fontSize="md">خروج از حسالب</Text>
           </Link>
         </Flex>
       </Flex>

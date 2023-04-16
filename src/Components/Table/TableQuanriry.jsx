@@ -122,8 +122,8 @@ function TableQuanriry({ listProduct, buttonStatusSave, getListProduct }) {
           <TableCaption>
             <Tabs variant="enclosed" display="flex" justifyContent="center">
               <TabList>
-                {paginationNumbers.map((itme) => (
-                  <Tab onClick={() => handelPagination(itme + 1)}>
+                {paginationNumbers.map((itme,index) => (
+                  <Tab key={index} onClick={() => handelPagination(itme + 1)}>
                     {itme + 1}
                   </Tab>
                 ))}

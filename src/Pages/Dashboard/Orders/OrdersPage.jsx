@@ -28,6 +28,7 @@ export function AdminOrdersPage() {
       });
     };
     fetchData();
+
   }, []);
 
   const handelStatusOrders = (e) => {

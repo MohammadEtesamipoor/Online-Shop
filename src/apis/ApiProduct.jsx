@@ -1,9 +1,27 @@
-import { GET_PRODUCTS } from 'Configs/url';
+import { GET_PRODUCTS,GET_PRODUCT } from 'Configs/url';
 import HttpService from 'Services/HTTP.Service';
 
-export async function GetProducts() {
+export async function AddProducts(data) {
     try {
-        const response = await HttpService.get(GET_PRODUCTS);
+        const response = await HttpService.post(GET_PRODUCTS,data);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
+
+export async function GetProducts(config=null) {
+    try {
+        const isConfig=config?`?category-id=${config}`:'/'
+        const response = await HttpService.get(GET_PRODUCTS+isConfig);
+        return response;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+}
+export async function GetProduct(config) {
+    try {
+        const response = await HttpService.get(config);
         return response;
     } catch (e) {
         return Promise.reject(e);
